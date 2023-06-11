@@ -1,0 +1,31 @@
+{
+  "name": "eve-item-configurator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WiggidyW/eve-item-configurator.git"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.1",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.2",
+    "@mui/x-data-grid": "^6.5.0",
+    "@types/google-protobuf": "^3.15.6",
+    "@types/prop-types": "^15.7.5",
+    "@uiw/react-textarea-code-editor": "^2.1.1",
+    "google-protobuf": "^3.21.2",
+    "grpc-web": "^1.4.2",
+    "js-yaml": "^4.1.0",
+    "protobufjs": "^7.2.3",
+    "react-redux": "^8.0.7",
+    "stretchy-data-grid": "github:WiggidyW/stretchy-data-grid"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5"
+  }
+}
