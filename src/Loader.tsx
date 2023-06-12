@@ -1,89 +1,66 @@
 import React from "react";
 
-import { item_configurator_proto as pb } from "./item_configurator_pb";
-import { Configurator, AuthKind, AuthScope, ToBool } from "./Kind";
+import { item_configurator_proto as pb } from "./item_configurator_pb.js";
 import { Popup, NotAuthorized, Err } from "./Popup";
-import Unreachable from "./Unreachable";
+import ConfiguratorProps from "./ConfiguratorProps";
 import Builder from "./Builder";
 
 import CircularProgress from '@mui/material/CircularProgress';
 
 interface Props {
-  kind: Configurator;
-  grpcClient: pb.ItemConfigurator;
-  business: string;
-  refreshTokenRef: React.MutableRefObject<string>;
-  onSaveRef: React.MutableRefObject<() => void>;
-  setUpdating: React.Dispatch<React.SetStateAction<boolean>>;
-  returnHome: () => void;
-  throwPopup: (Popup) => void;
-  authScope?: AuthScope;
-  authKind?: AuthKind;
+  cfgProps: ConfiguratorProps;
   lang: string;
 }
 
-export default function Loader(props: Props): React.ReactElement {
+const Loader = (props: Props): React.ReactElement => {
+  const { cfgProps, lang } = props;
   const {
-    kind,
-    grpcClient,
-    business,
     refreshTokenRef,
+    grpcClient,
     returnHome,
     throwPopup,
-    authScope,
-    authKind,
-    lang,
-    ...other
-  } = props;
+    navPath,
+  } = cfgProps;
 
   const [rep, setRep] = React.useState<
     pb.ListCharactersRep | pb.ListRep | Error
   >();
 
-  // Throw a popup and return home, returning an empty element until the
+  // Throws a popup and returns home, returning an empty element until the
   // home component is rendered again.
-  const throwPopupAndReturnHome = function(popup: Popup): React.ReactElement {
-    throwPopup(popup);
+  const throwPopupAndReturnHome = (v: Popup): React.ReactElement => {
+    throwPopup(v);
     returnHome();
     return <></>;
   };
 
-  // Build the request based on the configurator kind.
+  // Sends out a request based on the nav path.
   const fetchRep = async (): Promise<
     pb.ListCharactersRep | pb.ListRep
   > => {
-    switch (kind) {
-      case Configurator.AddCharacters || Configurator.DelCharacters:
-        return grpcClient.listCharacters({
-          name: business,
-          refreshToken: refreshTokenRef.current,
-          authKind: ToBool(authKind ?? Unreachable()),
-          authScope: ToBool(authScope ?? Unreachable()),
-        });
-      case Configurator.ToggleItems || Configurator.ConfigureItems:
-        let includeEnabled: pb.Query;
-        let includeJson: boolean;
-        if (kind === Configurator.ToggleItems) {
-          includeEnabled = pb.Query.BOTH;
-          includeJson = false;
-        } else {
-          includeEnabled = pb.Query.TRUE;
-          includeJson = true;
-        }
-        return grpcClient.list({
-          name: business,
-          refreshToken: refreshTokenRef.current,
-          includeEnabled: includeEnabled,
-          includeConfigured: pb.Query.BOTH,
-          language: lang,
-          includeJson: includeJson,
-          includeName: true,
-          includeMarketGroup: true,
-          includeGroup: true,
-          includeCategory: true,
-        });
-      default:
-        Unreachable();
+    if (navPath.isItem) {
+      const itemPath = navPath.itemPathUnchecked;
+      return grpcClient.list({
+        name: navPath.business,
+        refreshToken: refreshTokenRef.current,
+        includeEnabled: itemPath.isConfigure? pb.Query.TRUE : pb.Query.BOTH,
+        includeConfigured: pb.Query.BOTH,
+        language: lang,
+        includeJson: itemPath.isConfigure,
+        includeName: true,
+        includeMarketGroup: true,
+        includeGroup: true,
+        includeCategory: true,
+      });
+
+    } else { // navPath.isChar
+      const charPath = navPath.charPathUnchecked;
+      return grpcClient.listCharacters({
+        name: navPath.business,
+        refreshToken: refreshTokenRef.current,
+        authKind: charPath.authKind,
+        authScope: charPath.authScope,
+      });
     }
   };
 
@@ -103,20 +80,7 @@ export default function Loader(props: Props): React.ReactElement {
     }
 
     // Return the builder component.
-    return (
-      <Builder
-        rep={rep}
-        kind={kind}
-        grpcClient={grpcClient}
-        business={business}
-        refreshTokenRef={refreshTokenRef}
-        returnHome={returnHome}
-        throwPopup={throwPopup}
-        authScope={authScope}
-        authKind={authKind}
-        {...other}
-      />
-    );
+    return Builder({ cfgProps: cfgProps, grpcRep: rep });
 
   // If no response has been received, send it and return a loading screen.
   } else {
@@ -129,3 +93,5 @@ export default function Loader(props: Props): React.ReactElement {
     );
   }
 }
+
+export default Loader;

@@ -3,8 +3,10 @@ import React from "react";
 import { Configurator, AuthKind, AuthScope, ToggleConfigure, AddDel } from "./Kind.js";
 import { item_configurator_proto as pb } from "./item_configurator_pb.js";
 import Unreachable from "./Unreachable";
-import Loader from "./Loader";
+import Loader from "./LoaderOld.js";
 import Popup from "./Popup";
+import NavPath from "./NavPath.js";
+import NavStepper from "./NavStepper";
 
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -13,11 +15,11 @@ type ItemsCharacters = AuthScope;
 interface Props {
   refreshToken: string;
   businesses: string[];
-  grpcClient: pb.ItemConfigurator;
-  onSaveRef: React.MutableRefObject<() => void>;
   onCancelRef: React.MutableRefObject<() => void>;
+  onSaveRef: React.MutableRefObject<() => void>;
   langRef: React.MutableRefObject<string>;
   throwPopup: (Popup) => void;
+  grpcClient: pb.ItemConfigurator;
 }
 
 enum NavStep {
@@ -41,6 +43,8 @@ export default function Home(props: Props): React.ReactElement {
   } = props;
 
   const refreshTokenRef = React.useRef(initialRefreshToken);
+  
+  const [navPath, setNavPath] = React.useState<NavPath>();
 
   const [updating, setUpdating] = React.useState(false);
   const [renderChild, setRenderChild] = React.useState<Configurator>();

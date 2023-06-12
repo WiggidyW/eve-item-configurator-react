@@ -1,24 +1,30 @@
 import React from 'react';
 
-import StretchyDataGrid from 'stretchy-data-grid';
+import { SelectedRowProps } from './SelectedRow';
 import Row from "./Row";
+
+import StretchyDataGrid from 'stretchy-data-grid';
 
 import { GridColDef } from '@mui/x-data-grid';
 
 interface Props {
-  selectedSetter: (selected: number[]) => void;
+  selectedRowProps?: SelectedRowProps;
   columns: GridColDef[];
   rows: Row[];
 }
 
-export default function Grid(props: Props): React.ReactElement {
-  const { selectedSetter, ...other } = props;
+const Grid = (props: Props): React.ReactElement => {
+  const { selectedRowProps, columns, rows } = props;
   return (
     <StretchyDataGrid
-      onRowSelectionModelChange={(selected) => selectedSetter(selected)}
-      disableRowSelectionOnClick={true}
-      checkboxSelection={true}
-      {...other}
+      {...selectedRowProps}
+      columns={columns}
+      rows={rows}
     />
   );
 }
+
+export default Grid;
+export {
+  Props as GridProps,
+};
