@@ -21,3 +21,6 @@
     sed -i 's/##SERVICE_URL##/${_SERVICE_URL}/g' app.yaml
     sed -i 's/##AUTH_URL##/${_AUTH_URL}/g' app.yaml
     gcloud app deploy
+timeout: '1600s'
+options:
+  logging: CLOUD_LOGGING_ONLY
