@@ -1,0 +1,20 @@
+﻿runtime: nodejs18
+service: eve-item-configurator-react
+instance_class: F1
+env_variables:
+  VITE_BUSINESSES: ##BUSINESSES##
+  VITE_LANGUAGES: ##LANGUAGES##
+  VITE_ESI_CALLBACK_PATH: ##ESI_CALLBACK_PATH##
+  VITE_ESI_REDIRECT_URI: ##ESI_REDIRECT_URI##
+  VITE_ESI_CLIENT_ID: ##ESI_CLIENT_ID##
+  VITE_SERVICE_URL: ##SERVICE_URL##
+  VITE_AUTH_URL: ##AUTH_URL##
+handlers:
+  # Serve all static files with url ending with a file extension
+  - url: /(.*\..+)$
+    static_files: dist/\1
+    upload: dist/(.*\..+)$
+  # Catch all handler to index.html
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html

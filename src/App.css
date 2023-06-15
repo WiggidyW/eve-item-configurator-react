@@ -1,0 +1,185 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: hsl(220, 25%, 11%);
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+}
+
+.w-tc-editor {
+  background-color: #0d051d;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #846dec;
+  font-size: 16px;
+}
+
+.default {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexcol {
+  flex-direction: column;
+}
+
+.default-align-right {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: right;
+}
+
+.align-left {
+  align-items: left;
+}
+
+div .header {
+  height: 15%;
+  min-height: 64px;
+  max-height: 128px;
+  min-width: 512px;
+  background-color: #00000f;
+  /* border-bottom: 1px solid #a9b6ff; */
+}
+
+div .content {
+  height: 85%;
+  min-height: 512px;
+}
+
+div .app-host {
+  min-height: 640px;
+  min-width: 512px;
+}
+
+div .header-item {
+  height: 64px;
+  width: 70%;
+  min-width: 64px;
+}
+
+div .char-spacer {
+  width: 5%;
+}
+
+div .character-img {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+img .character {
+  height: 100%;
+}
+
+div .char-spacer {
+  width: 16px;
+}
+
+div .char-name {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+div .nav-parent {
+  height: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div .nav-description {
+  font-size: calc(16px + 0.1vw);
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 64px;
+}
+
+div .nav-selector {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  justify-content: top;
+  align-items: center;
+  max-height: 64px;
+}
+
+div .nav-spacer {
+  height: 16px;
+  display: block;
+}
+
+div .nav-spacer-footer {
+  height: 20%;
+}
+
+div .cfg-width-spacer {
+  width: 16px;
+}
+
+div .cfg-height-spacer {
+  height: 16px;
+}
+
+div .cfg-input {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div .cfg-grid {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div .cfg-input-button {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div .cfg-input-spacer {
+  height: 16px;
+}
+
+div .cfg-input-divider {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+div .cfg-input-button-divided {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div .top {
+  align-items: flex-end;
+}
+
+div .bottom {
+  align-items: flex-start;
+}

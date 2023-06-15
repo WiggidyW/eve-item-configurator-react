@@ -1,0 +1,23 @@
+﻿steps:
+- name: node
+  entrypoint: npm
+  args:
+  - 'install'
+- name: node
+  entrypoint: npm
+  args:
+  - 'run'
+  - 'build'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    sed -i 's/##BUSINESSES##/${_BUSINESSES}/g' app.yaml
+    sed -i 's/##LANGUAGES##/${_LANGUAGES}/g' app.yaml
+    sed -i 's/##ESI_CALLBACK_PATH##/${_ESI_CALLBACK_PATH}/g' app.yaml
+    sed -i 's/##ESI_REDIRECT_URI##/${_ESI_REDIRECT_URI}/g' app.yaml
+    sed -i 's/##ESI_CLIENT_ID##/${_ESI_CLIENT_ID}/g' app.yaml
+    sed -i 's/##SERVICE_URL##/${_SERVICE_URL}/g' app.yaml
+    sed -i 's/##AUTH_URL##/${_AUTH_URL}/g' app.yaml
+    gcloud app deploy
