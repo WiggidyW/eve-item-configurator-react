@@ -37,12 +37,7 @@ const App = (props: Props): React.ReactElement => {
   const onSaveRef = React.useRef<() => void>(() => {});
   const langRef = React.useRef<string>(languages[0]);
 
-  const [char, setChar] = React.useState<Character>({
-    characterId: 2118039281,
-    characterName: "Moodemel Molou",
-    refreshToken: "xPdK0GGsyEaB5HaqrUKJrA==",
-  });
-  // });
+  const [char, setChar] = React.useState<Character>();
   const [popup, setPopup] = React.useState<Popup>();
   // https://stackoverflow.com/questions/74033844/reacts-useref-hook-doesnt-take-a-function
   const [grpcClient, _] = React.useState(() => createClient(grpcUrl));
