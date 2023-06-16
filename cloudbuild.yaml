@@ -1,4 +1,17 @@
 ﻿steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo 'VITE_BUSINESSES=${_BUSINESSES}' >> .env
+    echo 'VITE_LANGUAGES=${_LANGUAGES}' >> .env
+    echo 'VITE_ESI_CLIENT_ID=${_ESI_CLIENT_ID}' >> .env
+    echo 'VITE_ESI_CALLBACK_PATH=${_ESI_CALLBACK_PATH}' >> .env
+    echo 'VITE_ESI_REDIRECT_URI=${_ESI_REDIRECT_URI}' >> .env
+    echo 'VITE_SERVICE_URL=${_SERVICE_URL}' >> .env
+    echo 'VITE_AUTH_URL=${_AUTH_URL}' >> .env
+    cat .env
 - name: node
   entrypoint: npm
   args:
@@ -9,18 +22,10 @@
   - 'run'
   - 'build'
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
+  entrypoint: gcloud
   args:
-  - '-c'
-  - |
-    sed -i 's/##BUSINESSES##/${_BUSINESSES}/g' app.yaml
-    sed -i 's/##LANGUAGES##/${_LANGUAGES}/g' app.yaml
-    sed -i 's/##ESI_CLIENT_ID##/${_ESI_CLIENT_ID}/g' app.yaml
-    sed -i 's?##ESI_CALLBACK_PATH##?${_ESI_CALLBACK_PATH}?g' app.yaml
-    sed -i 's?##ESI_REDIRECT_URI##?${_ESI_REDIRECT_URI}?g' app.yaml
-    sed -i 's?##SERVICE_URL##?${_SERVICE_URL}?g' app.yaml
-    sed -i 's?##AUTH_URL##?${_AUTH_URL}?g' app.yaml
-    gcloud app deploy
+  - 'app'
+  - 'deploy'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
