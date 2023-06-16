@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "./content/index.js";
-import { Popup, PopupThrower } from "./Popup.js";
+import { Popup, PopupThrower, Err } from "./Popup.js";
 import Header from "./Header.js";
 import { LoginSplash, LoginProps, Character } from "./LoginSplash";
 import { ItemConfiguratorClient as GrpcClient } from "./pb.client.js";
@@ -48,9 +48,15 @@ const App = (props: Props): React.ReactElement => {
 
   if (char === undefined) return (
     <div style={Style}>
+      <PopupThrower
+        popup={popup}
+        open={popup !== undefined}
+        close={() => setPopup(undefined)}
+      />
       <LoginSplash
         loginProps={loginProps}
         setChar={setChar}
+        handleErr={(err: Error) => setPopup(Err(err))}
       />
     </div>
   );
