@@ -30,19 +30,23 @@ const LoginSplash = (props: Props): React.ReactElement => {
     // scopes,
   } = loginProps;
 
-  const char = sessionStorage.getItem('LS_TOKEN');
-
   // true if we are currently authenticating or have authenticated
   let authenticating = true;
 
+  const char = sessionStorage.getItem('LS_TOKEN');
+
   if (char) setChar(JSON.parse(char));
 
-  else {
+  else if (sessionStorage.getItem('LS_SENT') == null) {
     const callbackPath = fmtCallbackPath(unfmtCallbackPath);
-    const esiCode = checkLogin(callbackPath);
-    if (esiCode) authenticate(esiCode, authUrl, (newChar) => (
-      sessionStorage.setItem('LS_TOKEN', JSON.stringify(newChar))
-    ));
+    const [esiCode, idx] = checkLogin(callbackPath);
+    if (esiCode && sessionStorage.getItem('LS_SENT') == null) {
+      sessionStorage.setItem('LS_SENT', '');
+      authenticate(esiCode, authUrl, (newChar) => {
+        sessionStorage.setItem('LS_TOKEN', JSON.stringify(newChar));
+        fixLoginUrl(idx);
+      });
+    }
     else authenticating = false;
   }
 
@@ -105,7 +109,7 @@ function fmtCallbackPath(unfmtCallbackPath?: string): string {
   else return `/${callbackPath}`;
 }
 
-function checkLogin(callbackPath: string): string | null {
+function checkLogin(callbackPath: string): [string, number] | [null, null] {
   const escapedCallbackPath = callbackPath.replace(
     /[.*+?^${}()|[\]\\]/g,
     '\\$&',
@@ -116,9 +120,8 @@ function checkLogin(callbackPath: string): string | null {
   const match = re.exec(url);
   if (match) {
     const code = match[1];
-    fixLoginUrl(match.index);
-    return code;
-  } else return null;
+    return [code, match.index];
+  } else return [null, null];
 }
 
 function fixLoginUrl(index: number): void {
