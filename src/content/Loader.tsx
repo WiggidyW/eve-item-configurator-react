@@ -30,10 +30,10 @@ const Loader = (props: Props): React.ReactElement => {
     navPath,
   } = cfgProps;
 
-  // True if Loading, or if Loaded.
-  const loadingRef = React.useRef(false);
-
   const [rep, setRep] = React.useState<pb.ListCharactersRep | pb.ListRep>();
+
+  // Send out the request
+  React.useEffect(() => { fetchAndHandleRep(); }, []);
 
   // Throws a popup and returns home, returning an empty element until the
   // home component is rendered again.
@@ -74,20 +74,16 @@ const Loader = (props: Props): React.ReactElement => {
   // If the response is an error, throws a popup and returns home.
   // If the response is not authorized, throws a popup and returns home.
   // If the response is authorized, stores the response.
-  // Always sets loading to false.
-  const fetchAndHandleRep = async (): Promise<void> => fetchRep()
-    .then((rep) => {
+  const fetchAndHandleRep = async (): Promise<void> => {
+    try {
+      const rep = await fetchRep();
       refreshTokenRef.current = rep.refreshToken; // Update it
       if (!rep.authorized) throwPopupAndReturnHome(NotAuthorized);
       else setRep(rep);
-    })
-    .catch((e: Error) => throwPopupAndReturnHome(Err(e)));
-
-  // Send out a request if it hasn't been sent yet.
-  if (!loadingRef.current) {
-    loadingRef.current = true;
-    fetchAndHandleRep();
-  }
+    } catch (e) {
+      throwPopupAndReturnHome(Err(e as Error));
+    }
+  };
 
   // If a response has been received, handle it.
   if (rep) {

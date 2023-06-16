@@ -33,6 +33,9 @@ const Configurator = <P,>(props: Props<P>): React.ReactElement => {
 
   const [updating, setUpdating] = React.useState(false);
 
+  // Update the save button to send and handle changes
+  onSaveRef.current = () => sendAndHandleChanges();
+
   // Throws a popup and returns home, returning an empty element until the
   // home component is rendered again.
   const throwPopupAndReturnHome = (v: Popup): void => {
@@ -64,8 +67,6 @@ const Configurator = <P,>(props: Props<P>): React.ReactElement => {
         .catch((e: Error) => throwPopupAndReturnHome(Err(e)));
     }
   };
-
-  onSaveRef.current = sendAndHandleChanges; // trigger whenever save is clicked
 
   if (updating) return (
     <CircularProgress/>
