@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './App.js';
+import App, { EsiApp } from './App.js';
 import ReactDOM from 'react-dom/client';
 
 const businesses: string[] = import.meta.env.VITE_BUSINESSES.split(',').map((s: string) => s.trim());
@@ -9,6 +9,7 @@ const redirectUri: string = import.meta.env.VITE_ESI_REDIRECT_URI;
 const clientId: string = import.meta.env.VITE_ESI_CLIENT_ID;
 const grpcUrl: string = import.meta.env.VITE_SERVICE_URL;
 const authUrl: string = import.meta.env.VITE_AUTH_URL;
+const esiApps: EsiApp[] = JSON.parse(import.meta.env.VITE_ESI_APPS);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -17,7 +18,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         grpcUrl={grpcUrl}
         businesses={businesses}
         languages={languages}
-        loginProps={{ redirectUri, clientId, authUrl, callbackPath }}
+        loginProps={{ redirectUri, clientId, authUrl, callbackPath, scopes: [] }}
+        esiApps={esiApps}
       />
     </div>
   </React.StrictMode>,

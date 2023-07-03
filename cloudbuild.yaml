@@ -11,6 +11,7 @@
     echo 'VITE_ESI_REDIRECT_URI=${_ESI_REDIRECT_URI}' >> .env
     echo 'VITE_SERVICE_URL=${_SERVICE_URL}' >> .env
     echo 'VITE_AUTH_URL=${_AUTH_URL}' >> .env
+    echo 'VITE_ESI_APPS=${_ESI_APPS}' >> .env
     cat .env
 - name: node
   entrypoint: npm

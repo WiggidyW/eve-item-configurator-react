@@ -1,6 +1,7 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoginImage from './Assets/eve-sso-login-black-large.png';
+import { skip } from 'node:test';
 
 // We don't handle fetches with useEffect because of the callback url.
 // Instead, we leverage sessionStorage and a global variable.
@@ -13,8 +14,10 @@ interface LoginProps {
   redirectUri: string;
   clientId: string;
   authUrl: string;
+  scopes: string[];
   callbackPath?: string;
-  // scopes?: string[];
+  namespace?: string;
+  skipFixUrl?: boolean;
 }
 
 interface Props {
@@ -36,20 +39,25 @@ const LoginSplash = (props: Props): React.ReactElement => {
     redirectUri,
     clientId,
     authUrl,
-    // scopes,
+    scopes,
+    namespace,
+    skipFixUrl,
   } = loginProps;
 
-  const fetchAndHandleAuth = (esiCode: string, fixUrlIdx: number) => (
-    fetchAuth(authUrl, esiCode, handleErr, (char: Character) => {
-      sessionStorage.setItem('LS_TOKEN', JSON.stringify(char));
-      fixLoginUrl(fixUrlIdx);
-    })
-  );
+  const sessionToken = namespace? `${namespace}_LS_TOKEN` : 'LS_TOKEN';
+
+  const fetchAndHandleAuth = (
+    esiCode: string,
+    fixUrlIdx: number,
+  ) => fetchAuth(authUrl, esiCode, namespace, handleErr, (char: Character) => {
+    sessionStorage.setItem(sessionToken, JSON.stringify(char));
+    if (!skipFixUrl) fixLoginUrl(fixUrlIdx);
+  });
 
   // true if we are currently authenticating or have authenticated
   let authenticating = true;
 
-  const char = sessionStorage.getItem('LS_TOKEN');
+  const char = sessionStorage.getItem(sessionToken);
   if (char) setChar(JSON.parse(char));
   else {
     const callbackPath = fmtCallbackPath(unfmtCallbackPath);
@@ -67,7 +75,7 @@ const LoginSplash = (props: Props): React.ReactElement => {
         + '?response_type=code'
         + `&redirect_uri=${encodeURI(redirectUri)}`
         + `&client_id=${encodeURI(clientId)}`
-        // + scopes? `&scope=${encodeURI(scopes.join(' '))}` : ''
+        + (scopes.length > 0 ? `&scope=${encodeURI(scopes.join(' '))}` : '')
         // Get a random state
         + '&state='
         + Math.random().toString(36).slice(2, 7)
@@ -92,10 +100,13 @@ const LoginSplash = (props: Props): React.ReactElement => {
 const fetchAuth = async (
   authUrl: string,
   esiCode: string,
+  namespace: string | undefined,
   handleErr: (err: Error) => void,
   handleOk: (char: Character) => void,
 ): Promise<void> => {
-  const fetchUrl = `${authUrl}/?code=${esiCode}`;
+  console.log(namespace);
+  const fetchUrl = 
+    `${authUrl}/?code=${esiCode}${namespace? `&namespace=${namespace}` : ''}`;
 
   // Don't send multiple requests to the same url
   if (AUTH_SENT.get(fetchUrl)) return;
@@ -109,8 +120,6 @@ const fetchAuth = async (
     else handleOk(body as Character);
   } catch (err: any) {
     handleErr(err as Error);
-  } finally {
-    AUTH_SENT.set(fetchUrl, false);
   }
 }
 
