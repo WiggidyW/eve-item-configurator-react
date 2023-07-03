@@ -18,7 +18,7 @@ const ItemConfigureInput = (props: Props): React.ReactElement => {
   const key = React.useRef<string | null>(null);
 
   const [obj, setObj] = React.useState<any>(undefined);
-  
+
   const validateObj = (obj: any) => obj !== undefined;
 
   const submit = () => {
@@ -29,26 +29,20 @@ const ItemConfigureInput = (props: Props): React.ReactElement => {
 
   return (
     <>
-      <div className={'cfg-input-button'}>
+      <div className={"cfg-input-button"}>
         <KeySelector
           keys={keys}
-          setKey={(newKey: string | null) => key.current = newKey}
+          setKey={(newKey: string | null) => (key.current = newKey)}
         />
       </div>
-      <div className={'cfg-input-spacer'}/>
-      <div className={'cfg-input-button'}>
-        <YamlSubmit
-          obj={obj}
-          validateObj={validateObj}
-          onClick={submit}
-        />
+      <div className={"cfg-input-spacer"} />
+      <div className={"cfg-input-button"}>
+        <YamlSubmit obj={obj} validateObj={validateObj} onClick={submit} />
       </div>
-      <div className={'cfg-input-spacer'}/>
-      <YamlTextInput
-        setObj={setObj}
-      />
+      <div className={"cfg-input-spacer"} />
+      <YamlTextInput setObj={setObj} />
     </>
   );
-}
+};
 
 export default ItemConfigureInput;
