@@ -53,8 +53,8 @@ const App = (props: Props): React.ReactElement => {
   const grpcClient = React.useState(() => createClient(grpcUrl))[0];
   const [popup, setPopup] = React.useState<Popup>();
 
-  const esiApp = useEsiApp(esiApps);
-  const char = useStorageCharacter(esiApp?.namespace);
+  const esiApp: EsiApp | null = useEsiApp(esiApps);
+  const char: Character | null = useStorageCharacter(esiApp?.namespace);
 
   // Return the login page for the specified esiApp
   if (char === null && esiApp !== null)
