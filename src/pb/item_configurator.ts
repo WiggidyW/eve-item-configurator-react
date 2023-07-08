@@ -74,10 +74,12 @@ export interface ListRep {
     /**
      * @generated from protobuf field: string refresh_token = 6;
      */
-    refreshToken: string; // new ESI refresh token (for authentication)    /**
+    refreshToken: string; // new ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: bool authorized = 7;
      */
-    authorized: boolean; // whether the character from the token is authorized}
+    authorized: boolean; // whether the character from the token is authorized
+}
 /**
  * @generated from protobuf message item_configurator_proto.ListReq
  */
@@ -85,16 +87,20 @@ export interface ListReq {
     /**
      * @generated from protobuf field: string name = 1;
      */
-    name: string; // name of the list    /**
+    name: string; // name of the list
+    /**
      * @generated from protobuf field: string refresh_token = 2;
      */
-    refreshToken: string; // ESI refresh token (for authentication)    /**
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: item_configurator_proto.Query include_enabled = 3;
      */
-    includeEnabled: Query; // whether to include enabled items    /**
+    includeEnabled: Query; // whether to include enabled items
+    /**
      * @generated from protobuf field: item_configurator_proto.Query include_configured = 4;
      */
-    includeConfigured: Query; // whether to include configured items    /**
+    includeConfigured: Query; // whether to include configured items
+    /**
      * @generated from protobuf field: bool include_json = 5;
      */
     includeJson: boolean;
@@ -145,10 +151,12 @@ export interface UpdateRep {
     /**
      * @generated from protobuf field: string refresh_token = 1;
      */
-    refreshToken: string; // new ESI refresh token (for authentication)    /**
+    refreshToken: string; // new ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: bool authorized = 2;
      */
-    authorized: boolean; // whether the character from the token is authorized}
+    authorized: boolean; // whether the character from the token is authorized
+}
 /**
  * Note: Don't delete JSON when things are disabled, keep storing it
  *
@@ -158,10 +166,12 @@ export interface UpdateReq {
     /**
      * @generated from protobuf field: string name = 1;
      */
-    name: string; // name of the list    /**
+    name: string; // name of the list
+    /**
      * @generated from protobuf field: string refresh_token = 2;
      */
-    refreshToken: string; // ESI refresh token (for authentication)    /**
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: repeated item_configurator_proto.UpdateItem items = 3;
      */
     items: UpdateItem[];
@@ -181,10 +191,12 @@ export interface ListCharactersRep {
     /**
      * @generated from protobuf field: string refresh_token = 2;
      */
-    refreshToken: string; // new ESI refresh token (for authentication)    /**
+    refreshToken: string; // new ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: bool authorized = 3;
      */
-    authorized: boolean; // whether the character from the token is authorized}
+    authorized: boolean; // whether the character from the token is authorized
+}
 /**
  * @generated from protobuf message item_configurator_proto.ListCharactersReq
  */
@@ -192,16 +204,20 @@ export interface ListCharactersReq {
     /**
      * @generated from protobuf field: string name = 1;
      */
-    name: string; // name of the list    /**
+    name: string; // name of the list
+    /**
      * @generated from protobuf field: bool auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write    /**
+    authKind: boolean; // false for read, true for write
+    /**
      * @generated from protobuf field: bool auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters    /**
+    authScope: boolean; // false for items, true for characters
+    /**
      * @generated from protobuf field: string refresh_token = 4;
      */
-    refreshToken: string; // ESI refresh token (for authentication)}
+    refreshToken: string; // ESI refresh token (for authentication)
+}
 /**
  * @generated from protobuf message item_configurator_proto.AddCharactersRep
  */
@@ -209,10 +225,12 @@ export interface AddCharactersRep {
     /**
      * @generated from protobuf field: string refresh_token = 1;
      */
-    refreshToken: string; // new ESI refresh token (for authentication)    /**
+    refreshToken: string; // new ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: bool authorized = 2;
      */
-    authorized: boolean; // whether the character from the token is authorized}
+    authorized: boolean; // whether the character from the token is authorized
+}
 /**
  * @generated from protobuf message item_configurator_proto.AddCharactersReq
  */
@@ -220,16 +238,20 @@ export interface AddCharactersReq {
     /**
      * @generated from protobuf field: string name = 1;
      */
-    name: string; // name of the list    /**
+    name: string; // name of the list
+    /**
      * @generated from protobuf field: bool auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write    /**
+    authKind: boolean; // false for read, true for write
+    /**
      * @generated from protobuf field: bool auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters    /**
+    authScope: boolean; // false for items, true for characters
+    /**
      * @generated from protobuf field: string refresh_token = 4;
      */
-    refreshToken: string; // ESI refresh token (for authentication)    /**
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: repeated string characters = 5;
      */
     characters: string[];
@@ -241,10 +263,12 @@ export interface DelCharactersRep {
     /**
      * @generated from protobuf field: string refresh_token = 1;
      */
-    refreshToken: string; // new ESI refresh token (for authentication)    /**
+    refreshToken: string; // new ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: bool authorized = 2;
      */
-    authorized: boolean; // whether the character from the token is authorized}
+    authorized: boolean; // whether the character from the token is authorized
+}
 /**
  * @generated from protobuf message item_configurator_proto.DelCharactersReq
  */
@@ -252,16 +276,20 @@ export interface DelCharactersReq {
     /**
      * @generated from protobuf field: string name = 1;
      */
-    name: string; // name of the list    /**
+    name: string; // name of the list
+    /**
      * @generated from protobuf field: bool auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write    /**
+    authKind: boolean; // false for read, true for write
+    /**
      * @generated from protobuf field: bool auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters    /**
+    authScope: boolean; // false for items, true for characters
+    /**
      * @generated from protobuf field: string refresh_token = 4;
      */
-    refreshToken: string; // ESI refresh token (for authentication)    /**
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
      * @generated from protobuf field: repeated string characters = 5;
      */
     characters: string[];

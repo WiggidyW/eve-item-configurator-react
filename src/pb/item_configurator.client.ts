@@ -3,18 +3,18 @@
 // tslint:disable
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { ItemConfigurator } from "./pb";
-import type { DelCharactersRep } from "./pb";
-import type { DelCharactersReq } from "./pb";
-import type { AddCharactersRep } from "./pb";
-import type { AddCharactersReq } from "./pb";
-import type { ListCharactersRep } from "./pb";
-import type { ListCharactersReq } from "./pb";
-import type { ListRep } from "./pb";
-import type { ListReq } from "./pb";
+import { ItemConfigurator } from "./item_configurator";
+import type { DelCharactersRep } from "./item_configurator";
+import type { DelCharactersReq } from "./item_configurator";
+import type { AddCharactersRep } from "./item_configurator";
+import type { AddCharactersReq } from "./item_configurator";
+import type { ListCharactersRep } from "./item_configurator";
+import type { ListCharactersReq } from "./item_configurator";
+import type { ListRep } from "./item_configurator";
+import type { ListReq } from "./item_configurator";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { UpdateRep } from "./pb";
-import type { UpdateReq } from "./pb";
+import type { UpdateRep } from "./item_configurator";
+import type { UpdateReq } from "./item_configurator";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
