@@ -3,7 +3,7 @@ import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
 import ConfiguratorProps from "../ConfiguratorProps";
 import { CharProps } from "../BuilderProps";
 import NewCharColumns from "./Columns";
-import CharDelInput from "../input/CharDel";
+import CharDelInput from "../../input/CharDel";
 import Configurator from "../Configurator";
 import Row from "../Row";
 

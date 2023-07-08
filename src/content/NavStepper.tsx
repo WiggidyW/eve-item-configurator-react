@@ -1,8 +1,6 @@
 import React from "react";
 import NavPath, { NavStep, NavPathBuilder, BusinessStepStr } from "./NavPath";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { FormControl, InputLabel } from "@mui/material";
+import Selector from "../input/Selector";
 
 interface Props {
   businesses: string[];
@@ -77,32 +75,5 @@ export default function NavStepper(props: Props): React.ReactElement {
       </div>
       <div className={"nav-spacer-footer"} />
     </div>
-  );
-}
-
-interface SelectorProps {
-  label: string;
-  choices: string[];
-  onSelect: (s: string) => void;
-}
-
-function Selector(props: SelectorProps): React.ReactElement {
-  const { label, choices, onSelect } = props;
-  return (
-    <FormControl sx={{ width: "100%", height: "100%" }}>
-      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-      <Select
-        sx={{ width: "100%", height: "100%" }}
-        label={label}
-        value={""}
-        onChange={(event: SelectChangeEvent) => onSelect(event.target.value)}
-      >
-        {choices.map((choice, index) => (
-          <MenuItem value={choice} key={index}>
-            {choice}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
   );
 }

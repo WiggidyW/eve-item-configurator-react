@@ -1,7 +1,7 @@
 import React from "react";
 import * as pb from "../../pb/item_configurator";
 import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
-import ItemConfigureInput from "../input/ItemConfigure";
+import ItemConfigureInput from "../../input/ItemConfigure";
 import ConfiguratorProps from "../ConfiguratorProps";
 import { ItemConfigureProps } from "../BuilderProps";
 import NewItemColumns from "./Columns";

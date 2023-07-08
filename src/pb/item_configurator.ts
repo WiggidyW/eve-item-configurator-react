@@ -206,13 +206,13 @@ export interface ListCharactersReq {
      */
     name: string; // name of the list
     /**
-     * @generated from protobuf field: bool auth_kind = 2;
+     * @generated from protobuf field: item_configurator_proto.AuthKind auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write
+    authKind: AuthKind; // false for read, true for write
     /**
-     * @generated from protobuf field: bool auth_scope = 3;
+     * @generated from protobuf field: item_configurator_proto.AuthScope auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters
+    authScope: AuthScope; // false for items, true for characters
     /**
      * @generated from protobuf field: string refresh_token = 4;
      */
@@ -240,13 +240,13 @@ export interface AddCharactersReq {
      */
     name: string; // name of the list
     /**
-     * @generated from protobuf field: bool auth_kind = 2;
+     * @generated from protobuf field: item_configurator_proto.AuthKind auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write
+    authKind: AuthKind; // false for read, true for write
     /**
-     * @generated from protobuf field: bool auth_scope = 3;
+     * @generated from protobuf field: item_configurator_proto.AuthScope auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters
+    authScope: AuthScope; // false for items, true for characters
     /**
      * @generated from protobuf field: string refresh_token = 4;
      */
@@ -278,13 +278,13 @@ export interface DelCharactersReq {
      */
     name: string; // name of the list
     /**
-     * @generated from protobuf field: bool auth_kind = 2;
+     * @generated from protobuf field: item_configurator_proto.AuthKind auth_kind = 2;
      */
-    authKind: boolean; // false for read, true for write
+    authKind: AuthKind; // false for read, true for write
     /**
-     * @generated from protobuf field: bool auth_scope = 3;
+     * @generated from protobuf field: item_configurator_proto.AuthScope auth_scope = 3;
      */
-    authScope: boolean; // false for items, true for characters
+    authScope: AuthScope; // false for items, true for characters
     /**
      * @generated from protobuf field: string refresh_token = 4;
      */
@@ -316,6 +316,46 @@ export enum Query {
      * @generated from protobuf enum value: BOTH = 2;
      */
     BOTH = 2
+}
+/**
+ * @generated from protobuf enum item_configurator_proto.AuthKind
+ */
+export enum AuthKind {
+    /**
+     * read-only access
+     *
+     * @generated from protobuf enum value: READ = 0;
+     */
+    READ = 0,
+    /**
+     * read-write access
+     *
+     * @generated from protobuf enum value: WRITE = 1;
+     */
+    WRITE = 1
+}
+/**
+ * @generated from protobuf enum item_configurator_proto.AuthScope
+ */
+export enum AuthScope {
+    /**
+     * access to items
+     *
+     * @generated from protobuf enum value: ITEMS = 0;
+     */
+    ITEMS = 0,
+    /**
+     * access to characters
+     *
+     * @generated from protobuf enum value: CHARACTERS = 1;
+     */
+    CHARACTERS = 1,
+    /**
+     * access to contracts
+     *
+     * @generated from protobuf enum value: CONTRACTS = 2;
+     */
+    CONTRACTS = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ListItem$Type extends MessageType<ListItem> {
@@ -886,13 +926,13 @@ class ListCharactersReq$Type extends MessageType<ListCharactersReq> {
     constructor() {
         super("item_configurator_proto.ListCharactersReq", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "auth_kind", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "auth_scope", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "auth_kind", kind: "enum", T: () => ["item_configurator_proto.AuthKind", AuthKind] },
+            { no: 3, name: "auth_scope", kind: "enum", T: () => ["item_configurator_proto.AuthScope", AuthScope] },
             { no: 4, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ListCharactersReq>): ListCharactersReq {
-        const message = { name: "", authKind: false, authScope: false, refreshToken: "" };
+        const message = { name: "", authKind: 0, authScope: 0, refreshToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ListCharactersReq>(this, message, value);
@@ -906,11 +946,11 @@ class ListCharactersReq$Type extends MessageType<ListCharactersReq> {
                 case /* string name */ 1:
                     message.name = reader.string();
                     break;
-                case /* bool auth_kind */ 2:
-                    message.authKind = reader.bool();
+                case /* item_configurator_proto.AuthKind auth_kind */ 2:
+                    message.authKind = reader.int32();
                     break;
-                case /* bool auth_scope */ 3:
-                    message.authScope = reader.bool();
+                case /* item_configurator_proto.AuthScope auth_scope */ 3:
+                    message.authScope = reader.int32();
                     break;
                 case /* string refresh_token */ 4:
                     message.refreshToken = reader.string();
@@ -930,12 +970,12 @@ class ListCharactersReq$Type extends MessageType<ListCharactersReq> {
         /* string name = 1; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* bool auth_kind = 2; */
-        if (message.authKind !== false)
-            writer.tag(2, WireType.Varint).bool(message.authKind);
-        /* bool auth_scope = 3; */
-        if (message.authScope !== false)
-            writer.tag(3, WireType.Varint).bool(message.authScope);
+        /* item_configurator_proto.AuthKind auth_kind = 2; */
+        if (message.authKind !== 0)
+            writer.tag(2, WireType.Varint).int32(message.authKind);
+        /* item_configurator_proto.AuthScope auth_scope = 3; */
+        if (message.authScope !== 0)
+            writer.tag(3, WireType.Varint).int32(message.authScope);
         /* string refresh_token = 4; */
         if (message.refreshToken !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.refreshToken);
@@ -1008,14 +1048,14 @@ class AddCharactersReq$Type extends MessageType<AddCharactersReq> {
     constructor() {
         super("item_configurator_proto.AddCharactersReq", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "auth_kind", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "auth_scope", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "auth_kind", kind: "enum", T: () => ["item_configurator_proto.AuthKind", AuthKind] },
+            { no: 3, name: "auth_scope", kind: "enum", T: () => ["item_configurator_proto.AuthScope", AuthScope] },
             { no: 4, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "characters", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AddCharactersReq>): AddCharactersReq {
-        const message = { name: "", authKind: false, authScope: false, refreshToken: "", characters: [] };
+        const message = { name: "", authKind: 0, authScope: 0, refreshToken: "", characters: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AddCharactersReq>(this, message, value);
@@ -1029,11 +1069,11 @@ class AddCharactersReq$Type extends MessageType<AddCharactersReq> {
                 case /* string name */ 1:
                     message.name = reader.string();
                     break;
-                case /* bool auth_kind */ 2:
-                    message.authKind = reader.bool();
+                case /* item_configurator_proto.AuthKind auth_kind */ 2:
+                    message.authKind = reader.int32();
                     break;
-                case /* bool auth_scope */ 3:
-                    message.authScope = reader.bool();
+                case /* item_configurator_proto.AuthScope auth_scope */ 3:
+                    message.authScope = reader.int32();
                     break;
                 case /* string refresh_token */ 4:
                     message.refreshToken = reader.string();
@@ -1056,12 +1096,12 @@ class AddCharactersReq$Type extends MessageType<AddCharactersReq> {
         /* string name = 1; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* bool auth_kind = 2; */
-        if (message.authKind !== false)
-            writer.tag(2, WireType.Varint).bool(message.authKind);
-        /* bool auth_scope = 3; */
-        if (message.authScope !== false)
-            writer.tag(3, WireType.Varint).bool(message.authScope);
+        /* item_configurator_proto.AuthKind auth_kind = 2; */
+        if (message.authKind !== 0)
+            writer.tag(2, WireType.Varint).int32(message.authKind);
+        /* item_configurator_proto.AuthScope auth_scope = 3; */
+        if (message.authScope !== 0)
+            writer.tag(3, WireType.Varint).int32(message.authScope);
         /* string refresh_token = 4; */
         if (message.refreshToken !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.refreshToken);
@@ -1137,14 +1177,14 @@ class DelCharactersReq$Type extends MessageType<DelCharactersReq> {
     constructor() {
         super("item_configurator_proto.DelCharactersReq", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "auth_kind", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "auth_scope", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "auth_kind", kind: "enum", T: () => ["item_configurator_proto.AuthKind", AuthKind] },
+            { no: 3, name: "auth_scope", kind: "enum", T: () => ["item_configurator_proto.AuthScope", AuthScope] },
             { no: 4, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "characters", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<DelCharactersReq>): DelCharactersReq {
-        const message = { name: "", authKind: false, authScope: false, refreshToken: "", characters: [] };
+        const message = { name: "", authKind: 0, authScope: 0, refreshToken: "", characters: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<DelCharactersReq>(this, message, value);
@@ -1158,11 +1198,11 @@ class DelCharactersReq$Type extends MessageType<DelCharactersReq> {
                 case /* string name */ 1:
                     message.name = reader.string();
                     break;
-                case /* bool auth_kind */ 2:
-                    message.authKind = reader.bool();
+                case /* item_configurator_proto.AuthKind auth_kind */ 2:
+                    message.authKind = reader.int32();
                     break;
-                case /* bool auth_scope */ 3:
-                    message.authScope = reader.bool();
+                case /* item_configurator_proto.AuthScope auth_scope */ 3:
+                    message.authScope = reader.int32();
                     break;
                 case /* string refresh_token */ 4:
                     message.refreshToken = reader.string();
@@ -1185,12 +1225,12 @@ class DelCharactersReq$Type extends MessageType<DelCharactersReq> {
         /* string name = 1; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* bool auth_kind = 2; */
-        if (message.authKind !== false)
-            writer.tag(2, WireType.Varint).bool(message.authKind);
-        /* bool auth_scope = 3; */
-        if (message.authScope !== false)
-            writer.tag(3, WireType.Varint).bool(message.authScope);
+        /* item_configurator_proto.AuthKind auth_kind = 2; */
+        if (message.authKind !== 0)
+            writer.tag(2, WireType.Varint).int32(message.authKind);
+        /* item_configurator_proto.AuthScope auth_scope = 3; */
+        if (message.authScope !== 0)
+            writer.tag(3, WireType.Varint).int32(message.authScope);
         /* string refresh_token = 4; */
         if (message.refreshToken !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.refreshToken);

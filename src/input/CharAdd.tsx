@@ -1,5 +1,5 @@
 import React from "react";
-import { Popup, InvalidInput } from "../../Popup";
+import { Popup, InvalidInput } from "../Popup";
 import YamlSubmit from "./YamlSubmit";
 import YamlInput from "./YamlText";
 

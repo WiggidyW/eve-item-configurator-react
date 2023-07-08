@@ -2,7 +2,7 @@ import React from "react";
 import ConfiguratorProps from "../ConfiguratorProps";
 import { CharProps } from "../BuilderProps";
 import NewCharColumns from "./Columns";
-import CharAddInput from "../input/CharAdd";
+import CharAddInput from "../../input/CharAdd";
 import Configurator from "../Configurator";
 import Row from "../Row";
 

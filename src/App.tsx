@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Home from "./content/index";
 import { Popup, PopupThrower, Err } from "./Popup";
 import Header from "./Header";
@@ -13,6 +13,9 @@ import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import "./App.css";
+import Navigation from "./Navigation";
+
+const TABS = ["Home", "Buyback Contracts", "Authorization"];
 
 const Theme = createTheme({
   palette: {
@@ -35,25 +38,17 @@ interface Props {
   esiApps: EsiApp[];
 }
 
-const Style = {
-  height: "100%",
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 const App = (props: Props): React.ReactElement => {
   const { loginProps, businesses, languages, grpcUrl, esiApps } = props;
 
-  const onCancelRef = React.useRef<() => void>(() => {});
-  const onSaveRef = React.useRef<() => void>(() => {});
-  const langRef = React.useRef<string>(languages[0]);
-
-  const grpcClient = React.useState(() => createClient(grpcUrl))[0];
-  const [popup, setPopup] = React.useState<Popup>();
-
+  const [tab, setTab] = useState(TABS[0]);
+  const onCancelRef = useRef<() => void>(() => {});
+  const onSaveRef = useRef<() => void>(() => {});
+  const langRef = useRef<string>(languages[0]);
+  const grpcClient = useState(() => createClient(grpcUrl))[0];
+  const [popup, setPopup] = useState<Popup>();
   const esiApp: EsiApp | null = useEsiApp(esiApps);
+  const initRefreshTokenRef = useRef<string | null>(null);
   const char: Character | null = useStorageCharacter(esiApp?.namespace);
 
   // Return the login page for the specified esiApp
@@ -99,9 +94,18 @@ const App = (props: Props): React.ReactElement => {
   }
 
   /* else if (char !== null && esiApp === null) { */
+
   // Ensure that these do nothing at this point.
   onCancelRef.current = () => {};
   onSaveRef.current = () => {};
+
+  // Initialize this once the first time
+  if (initRefreshTokenRef.current === null)
+    initRefreshTokenRef.current = char.refreshToken;
+
+  // Cast to a type that does not have the null union option
+  const refreshTokenRef = initRefreshTokenRef as React.MutableRefObject<string>;
+
   // Return the admin page content
   return (
     <ThemeProvider theme={Theme}>
@@ -111,6 +115,7 @@ const App = (props: Props): React.ReactElement => {
           open={popup !== undefined}
           close={() => setPopup(undefined)}
         />
+        <Navigation tabs={TABS} onSelect={(tab: string) => setTab(tab)} />
         <div className={"default header"}>
           <Header
             onCancelRef={onCancelRef}
@@ -124,7 +129,7 @@ const App = (props: Props): React.ReactElement => {
         <div className={"cfg-height-spacer"} />
         <div className={"default content"}>
           <Home
-            refreshToken={char.refreshToken}
+            refreshTokenRef={refreshTokenRef}
             businesses={businesses}
             onCancelRef={onCancelRef}
             onSaveRef={onSaveRef}
@@ -154,8 +159,8 @@ const findAppMatchinghNamespace = (
 
 const useEsiApp = (esiApps: EsiApp[]): EsiApp | null => {
   const currentUrl = window.location.href;
-  const mostRecentUrlRef = React.useRef<string>("");
-  const esiAppRef = React.useRef<EsiApp | null>(null);
+  const mostRecentUrlRef = useRef<string>("");
+  const esiAppRef = useRef<EsiApp | null>(null);
 
   if (currentUrl !== mostRecentUrlRef.current) {
     mostRecentUrlRef.current = currentUrl;

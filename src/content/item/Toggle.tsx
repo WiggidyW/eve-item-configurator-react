@@ -3,7 +3,7 @@ import * as pb from "../../pb/item_configurator";
 import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
 import ConfiguratorProps from "../ConfiguratorProps";
 import { ItemToggleProps } from "../BuilderProps";
-import ItemToggleInput from "../input/ItemToggle";
+import ItemToggleInput from "../../input/ItemToggle";
 import { renderEnabled } from "./RenderRow";
 import NewItemColumns from "./Columns";
 import Configurator from "../Configurator";

@@ -1,3 +1,5 @@
+import * as pb from "../pb/item_configurator";
+
 export enum NavStep {
   ItemOrChar,
   ConfigureOrToggle,
@@ -23,8 +25,8 @@ export class NavPathBuilder {
   public nextStep(): [string, NavStep] {
     if (this._inner === undefined) {
       return [
-        `Would you like to modify Items?\n`
-          + `Or would you like to modify Characters?`,
+        `Would you like to modify Items?\n` +
+          `Or would you like to modify Characters?`,
         NavStep.ItemOrChar,
       ];
     } else {
@@ -55,13 +57,22 @@ export default class NavPath {
   private _isItem: boolean;
   private _inner: CharPath | ItemPath;
 
-  public constructor(
-    business: string,
-    inner: CharPath | ItemPath,
-  ) {
+  public constructor(business: string, inner: CharPath | ItemPath) {
     this._business = business;
     this._inner = inner;
     this._isItem = inner instanceof ItemPath;
+  }
+
+  public static newAuthPath(
+    business: string,
+    authScope: pb.AuthScope,
+    authKind: pb.AuthKind,
+    isAdd: boolean
+  ): NavPath {
+    return new NavPath(
+      business,
+      CharPath.newAuthPath(authScope, authKind, isAdd)
+    );
   }
 
   public get business(): string {
@@ -123,20 +134,20 @@ export class CharPathBuilder {
   public nextStep(): [string, NavStep] {
     if (this._isItem === undefined) {
       return [
-        `Would you like to modify who can read / write Characters?\n`
-          + `Or would you like to modify who can read / write Items?`,
+        `Would you like to modify who can read / write Characters?\n` +
+          `Or would you like to modify who can read / write Items?`,
         NavStep.ItemOrChar,
       ];
     } else if (this._isRead === undefined) {
       return [
-        `Would you like to modify who can read ${this.itemStr}?\n`
-          + `Or would you like to modify who can write ${this.itemStr}?`,
+        `Would you like to modify who can read ${this.itemStr}?\n` +
+          `Or would you like to modify who can write ${this.itemStr}?`,
         NavStep.ReadOrWrite,
-      ]
+      ];
     } else if (this._isAdd === undefined) {
       return [
-        "Would you like to Add People?\n"
-          + "Or would you like to Delete People?",
+        "Would you like to Add People?\n" +
+          "Or would you like to Delete People?",
         NavStep.AddOrDel,
       ];
     } else {
@@ -153,9 +164,10 @@ export class CharPathBuilder {
     }
   }
   public finish(): CharPath | undefined {
-    if (this._isItem !== undefined
-      && this._isRead !== undefined
-      && this._isAdd !== undefined
+    if (
+      this._isItem !== undefined &&
+      this._isRead !== undefined &&
+      this._isAdd !== undefined
     ) {
       return new CharPath(this._isItem, this._isRead, this._isAdd);
     }
@@ -163,37 +175,48 @@ export class CharPathBuilder {
 }
 
 export class CharPath {
-  private _isItem: boolean;
-  private _isRead: boolean;
+  private _authScope: pb.AuthScope;
+  private _authKind: pb.AuthKind;
   private _isAdd: boolean;
 
-  public constructor(
-    isItem: boolean,
-    isRead: boolean,
-    isAdd: boolean,
-  ) {
-    this._isItem = isItem;
-    this._isRead = isRead;
+  public constructor(isItem: boolean, isRead: boolean, isAdd: boolean) {
+    this._authScope = isItem ? pb.AuthScope.ITEMS : pb.AuthScope.CHARACTERS;
+    this._authKind = isRead ? pb.AuthKind.READ : pb.AuthKind.WRITE;
     this._isAdd = isAdd;
   }
 
-  public get authKind(): boolean {
-    return this._isRead;
+  public static newAuthPath(
+    authScope: pb.AuthScope,
+    authKind: pb.AuthKind,
+    isAdd: boolean
+  ): CharPath {
+    const path = new CharPath(false, false, false);
+    path._authScope = authScope;
+    path._authKind = authKind;
+    path._isAdd = isAdd;
+    return path;
+  }
+
+  public get authKind(): pb.AuthKind {
+    return this._authKind;
   }
   public get isRead(): boolean {
-    return this._isRead;
+    return this._authKind === pb.AuthKind.READ;
   }
   public get isWrite(): boolean {
-    return !this._isRead;
+    return this._authKind === pb.AuthKind.WRITE;
   }
-  public get authScope(): boolean {
-    return this._isItem;
+  public get authScope(): pb.AuthScope {
+    return this._authScope;
   }
   public get isItem(): boolean {
-    return this._isItem;
+    return this._authScope === pb.AuthScope.ITEMS;
   }
   public get isChar(): boolean {
-    return !this._isItem;
+    return this._authScope === pb.AuthScope.CHARACTERS;
+  }
+  public get isContract(): boolean {
+    return this._authScope === pb.AuthScope.CONTRACTS;
   }
   public get isAdd(): boolean {
     return this._isAdd;
@@ -211,8 +234,8 @@ export class ItemPathBuilder {
   public nextStep(): [string, NavStep] {
     if (this._isConfigure === undefined) {
       return [
-        `Would you like to Enable / Disable Items?\n`
-          + `or would you like to Configure Items?`,
+        `Would you like to Enable / Disable Items?\n` +
+          `or would you like to Configure Items?`,
         NavStep.ConfigureOrToggle,
       ];
     } else {

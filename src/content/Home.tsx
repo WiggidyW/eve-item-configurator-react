@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { ItemConfiguratorClient as GrpcClient } from "../pb/item_configurator.client";
 import NavStepper from "./NavStepper";
 import NavPath from "./NavPath";
@@ -8,18 +8,18 @@ import { Popup } from "../Popup";
 // Home -> NavStepper -> Home -> Loader -> ConfiguratorVariant -> Configurator
 
 interface Props {
-  refreshToken: string;
+  refreshTokenRef: MutableRefObject<string>;
   businesses: string[];
-  onCancelRef: React.MutableRefObject<() => void>;
-  onSaveRef: React.MutableRefObject<() => void>;
-  langRef: React.MutableRefObject<string>;
+  onCancelRef: MutableRefObject<() => void>;
+  onSaveRef: MutableRefObject<() => void>;
+  langRef: MutableRefObject<string>;
   throwPopup: (p: Popup) => void;
   grpcClient: GrpcClient;
 }
 
 const Home = (props: Props): React.ReactElement => {
   const {
-    refreshToken: initialRefreshToken,
+    refreshTokenRef,
     businesses,
     onCancelRef,
     onSaveRef,
@@ -27,8 +27,6 @@ const Home = (props: Props): React.ReactElement => {
     throwPopup,
     grpcClient,
   } = props;
-
-  const refreshTokenRef = React.useRef(initialRefreshToken);
 
   const [navPath, setNavPath] = React.useState<NavPath>();
 

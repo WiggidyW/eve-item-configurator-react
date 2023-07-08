@@ -1,5 +1,5 @@
 import React from "react";
-import { prettifyObj } from "../JsonUtil";
+import { prettifyObj } from "../content/JsonUtil";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
