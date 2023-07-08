@@ -1,10 +1,8 @@
 import React from "react";
-
-import { prettifyObj } from "../JsonUtil.js";
-
-import CodeEditor from '@uiw/react-textarea-code-editor';
-import Tooltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
+import { prettifyObj } from "../JsonUtil";
+import CodeEditor from "@uiw/react-textarea-code-editor";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 
 interface Props {
   obj: any;
@@ -17,25 +15,20 @@ export default function YamlSubmitButton(props: Props): React.JSX.Element {
 
   const value = (() => {
     if (validateObj(obj)) {
-      try { return prettifyObj(obj); }
-      catch (_) {}
+      try {
+        return prettifyObj(obj);
+      } catch (_) {}
     }
     return "Invalid Input";
   })();
-  
+
   return (
     <Tooltip
-      title={
-        <CodeEditor
-          value={value}
-          language="json"
-          readOnly={true}
-        />
-      }
+      title={<CodeEditor value={value} language="json" readOnly={true} />}
       placement={"right"}
     >
       <Button
-        sx={{ width: '100%', height: '100%' }}
+        sx={{ width: "100%", height: "100%" }}
         variant="outlined"
         onClick={onClick}
       >

@@ -1,15 +1,14 @@
-import * as pb from "../pb";
-
-import { prettifyStr } from "./JsonUtil.js";
-import Row from "./Row.js";
+import * as pb from "../pb/item_configurator";
+import { prettifyStr } from "./JsonUtil";
+import Row from "./Row";
 
 const BuildCharAddProps = (rep: pb.ListCharactersRep) => {
   return buildCharProps(rep);
-}
+};
 
 const BuildCharDelProps = (rep: pb.ListCharactersRep) => {
   return buildCharProps(rep);
-}
+};
 
 const buildCharProps = (rep: pb.ListCharactersRep) => {
   const chars = rep.characters;
@@ -21,8 +20,11 @@ const BuildItemToggleProps = (rep: pb.ListRep) => {
   const initBuilderProps = buildItemProps(rep);
 
   const items = rep.items;
-  items.reduce((acc, item) => acc.add(item.enabled ?? false), new Set<boolean>());
-  
+  items.reduce(
+    (acc, item) => acc.add(item.enabled ?? false),
+    new Set<boolean>()
+  );
+
   const rows = new Array<Row>(items.length);
   const newEnabled = new Array<boolean | null>(items.length);
 
@@ -37,7 +39,7 @@ const BuildItemToggleProps = (rep: pb.ListRep) => {
     rows,
     getEnabled: (idx: number) => items[idx].enabled ?? false,
   };
-}
+};
 
 const BuildItemConfigureProps = (rep: pb.ListRep) => {
   const initBuilderProps = buildItemProps(rep);
@@ -67,7 +69,7 @@ const BuildItemConfigureProps = (rep: pb.ListRep) => {
       return jsonStrIdx === undefined ? "" : jsonStrs[jsonStrIdx];
     },
   };
-}
+};
 
 const buildItemProps = (rep: pb.ListRep) => {
   const marketGroups = rep.marketGroups;
@@ -76,13 +78,14 @@ const buildItemProps = (rep: pb.ListRep) => {
   const items = rep.items;
 
   return {
-    getMarketGroup: (idx: number) => marketGroups[items[idx].marketGroupIdx ?? 0],
+    getMarketGroup: (idx: number) =>
+      marketGroups[items[idx].marketGroupIdx ?? 0],
     getCategory: (idx: number) => categories[items[idx].categoryIdx ?? 0],
     getGroup: (idx: number) => groups[items[idx].groupIdx ?? 0],
     getTypeId: (idx: number) => items[idx].typeId ?? 0,
     getName: (idx: number) => items[idx].name ?? "",
   };
-}
+};
 
 export {
   BuildItemConfigureProps,

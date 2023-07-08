@@ -1,7 +1,7 @@
 // import React from "react";
 
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 // const ITEM_IMG_URL_1 = "https://images.evetech.net/types/";
 // const ITEM_IMG_URL_2 = "/icon?size=";
@@ -21,45 +21,29 @@ export function renderName(name: string, _: number) {
 }
 
 export function renderCategory(category: string) {
-  return (
-    <div className="ItemCategory">
-      {category}
-    </div>
-  );
+  return <div className="ItemCategory">{category}</div>;
 }
 
 export function renderGroup(group: string) {
-  return (
-    <div className="ItemGroup">
-      {group}
-    </div>
-  );
+  return <div className="ItemGroup">{group}</div>;
 }
 
 export function renderMarketGroup(marketGroup: string) {
-  return (
-    <div className="ItemMarketGroup">
-      {marketGroup}
-    </div>
-  );
+  return <div className="ItemMarketGroup">{marketGroup}</div>;
 }
 
 export function renderEnabled(enabled: boolean) {
   return (
     <div className="ItemEnabled">
-      {enabled?
-        <CheckIcon htmlColor="green"/>
-        :
-        <CloseIcon htmlColor="red"/>
-      }
+      {enabled ? (
+        <CheckIcon htmlColor="green" />
+      ) : (
+        <CloseIcon htmlColor="red" />
+      )}
     </div>
   );
 }
 
 export function renderJson(json: string) {
-  return (
-    <div className="ItemJson">
-      {json}
-    </div>
-  );
+  return <div className="ItemJson">{json}</div>;
 }

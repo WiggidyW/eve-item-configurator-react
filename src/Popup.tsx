@@ -1,9 +1,8 @@
 import React from "react";
-
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 interface PopupThrowerProps {
   popup?: Popup;
@@ -18,14 +17,12 @@ const PopupThrower = (props: PopupThrowerProps): React.ReactElement => {
       open={open}
       onClose={close}
       sx={{
-        "color": popup?.ok ? "green" : "red",
+        color: popup?.ok ? "green" : "red",
       }}
     >
       <DialogTitle>{popup?.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          {popup?.message}
-        </DialogContentText>
+        <DialogContentText>{popup?.message}</DialogContentText>
       </DialogContent>
     </Dialog>
   );
@@ -61,13 +58,5 @@ const Err = (e: Error): Popup => ({
   ok: false,
 });
 
-export type {
-  Popup,
-};
-export {
-  NotAuthorized,
-  InvalidInput,
-  PopupThrower,
-  Success,
-  Err,
-};
+export type { Popup };
+export { NotAuthorized, InvalidInput, PopupThrower, Success, Err };

@@ -1,14 +1,14 @@
 import React from "react";
-import Home from "./content/index.js";
-import { Popup, PopupThrower, Err } from "./Popup.js";
-import Header from "./Header.js";
+import Home from "./content/index";
+import { Popup, PopupThrower, Err } from "./Popup";
+import Header from "./Header";
 import {
   LoginSplash,
   LoginProps,
   Character,
   useStorageCharacter,
 } from "./LoginSplash";
-import { ItemConfiguratorClient as GrpcClient } from "./pb.client";
+import { ItemConfiguratorClient as GrpcClient } from "./pb/item_configurator.client";
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 

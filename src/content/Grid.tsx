@@ -1,9 +1,7 @@
-import React from 'react';
-
-import { SelectedRowProps } from './SelectedRow';
+import React from "react";
+import { SelectedRowProps } from "./SelectedRow";
 import Row from "./Row";
-
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef } from "@mui/x-data-grid-pro";
 
 interface Props {
   selectedRowProps?: SelectedRowProps;
@@ -15,7 +13,7 @@ const Grid = (props: Props): React.ReactElement => {
   const { selectedRowProps, columns, rows } = props;
   return (
     <DataGridPro
-      sx={{ height: '100%', width: '100%' }}
+      sx={{ height: "100%", width: "100%" }}
       {...selectedRowProps}
       columns={columns}
       rows={rows}
@@ -24,9 +22,7 @@ const Grid = (props: Props): React.ReactElement => {
       pagination
     />
   );
-}
+};
 
 export default Grid;
-export type {
-  Props as GridProps,
-};
+export type { Props as GridProps };

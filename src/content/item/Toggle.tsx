@@ -1,7 +1,5 @@
 import React from "react";
-
-import * as pb from "../../pb";
-
+import * as pb from "../../pb/item_configurator";
 import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
 import ConfiguratorProps from "../ConfiguratorProps";
 import { ItemToggleProps } from "../BuilderProps";
@@ -35,26 +33,26 @@ const ItemToggle = (props: Props): React.ReactElement => {
   const getSelected = GetSelected(selectedRowsRef);
 
   // any in changes that aren't null and aren't equal to previous value
-  const hasChanges = () => changes.some((change, i) => (
-    change !== null && change !== initGetEnabled(i))
-  );
+  const hasChanges = () =>
+    changes.some(
+      (change, i) => change !== null && change !== initGetEnabled(i)
+    );
 
-  const sendChanges = async () => grpcClient.update({
-    name: navPath.business,
-    refreshToken: refreshTokenRef.current,
-    items: changes.reduce<pb.UpdateItem[]>(
-      (items, enabled, i) => {
-        if (enabled !== null) items.push({
-          typeId: getTypeId(i),
-          enabled,
-          jsonIdx: {},
-        });
+  const sendChanges = async () =>
+    grpcClient.update({
+      name: navPath.business,
+      refreshToken: refreshTokenRef.current,
+      items: changes.reduce<pb.UpdateItem[]>((items, enabled, i) => {
+        if (enabled !== null)
+          items.push({
+            typeId: getTypeId(i),
+            enabled,
+            jsonIdx: {},
+          });
         return items;
-      },
-      [],
-    ),
-    json: [],
-  }).response;
+      }, []),
+      json: [],
+    }).response;
 
   // Returns the change if not null, or the initial
   const getEnabled = (idx: number) => changes[idx] ?? initGetEnabled(idx);
@@ -74,7 +72,7 @@ const ItemToggle = (props: Props): React.ReactElement => {
       renderCell: (params) => renderEnabled(getEnabled(params.row.id)),
       width: 50,
     },
-  ]
+  ];
 
   return (
     <Configurator
@@ -86,6 +84,6 @@ const ItemToggle = (props: Props): React.ReactElement => {
       cfgInputProps={{ setEnabled }}
     />
   );
-}
+};
 
 export default ItemToggle;

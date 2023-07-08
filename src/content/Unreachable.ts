@@ -1,3 +1,3 @@
 export default function Unreachable(): never {
-    throw new Error("Unreachable");
+  throw new Error("Unreachable");
 }

@@ -1,12 +1,11 @@
 import React from "react";
-
-import { GetSelected, NewSelectedRowProps } from "../SelectedRow.js";
-import ConfiguratorProps from "../ConfiguratorProps.js";
-import { CharProps } from "../BuilderProps.js";
-import NewCharColumns from "./Columns.js";
-import CharDelInput from "../input/CharDel.js";
-import Configurator from "../Configurator.js";
-import Row from "../Row.js";
+import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
+import ConfiguratorProps from "../ConfiguratorProps";
+import { CharProps } from "../BuilderProps";
+import NewCharColumns from "./Columns";
+import CharDelInput from "../input/CharDel";
+import Configurator from "../Configurator";
+import Row from "../Row";
 
 interface Props {
   cfgProps: ConfiguratorProps;
@@ -33,13 +32,14 @@ const CharDel = (props: Props): React.ReactElement => {
 
   const columns = NewCharColumns(getName);
 
-  const sendChanges = async () => grpcClient.addCharacters({
-    name: navPath.business,
-    refreshToken: refreshTokenRef.current,
-    characters: Array.from(changes.current),
-    authKind: navPath.charPathUnchecked.authKind,
-    authScope: navPath.charPathUnchecked.authScope,
-  }).response;
+  const sendChanges = async () =>
+    grpcClient.addCharacters({
+      name: navPath.business,
+      refreshToken: refreshTokenRef.current,
+      characters: Array.from(changes.current),
+      authKind: navPath.charPathUnchecked.authKind,
+      authScope: navPath.charPathUnchecked.authScope,
+    }).response;
 
   const delCharacters = () => {
     const initialSize = uniqueChars.size;
@@ -63,6 +63,6 @@ const CharDel = (props: Props): React.ReactElement => {
       cfgInputProps={{ delCharacters }}
     />
   );
-}
+};
 
 export default CharDel;

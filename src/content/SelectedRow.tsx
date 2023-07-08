@@ -14,13 +14,9 @@ interface SelectedRowProps {
 const NewSelectedRowProps = (ref: Ref): SelectedRowProps => ({
   disableRowSelectionOnClick: true,
   checkboxSelection: true,
-  onRowSelectionModelChange: (selected: GridRowSelectionModel) => (
-    ref.current = selected as number[]
-  ),
+  onRowSelectionModelChange: (selected: GridRowSelectionModel) =>
+    (ref.current = selected as number[]),
 });
 
 export type { SelectedRowProps };
-export {
-  NewSelectedRowProps,
-  GetSelected,
-};
+export { NewSelectedRowProps, GetSelected };

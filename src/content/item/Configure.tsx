@@ -1,7 +1,5 @@
 import React from "react";
-
-import * as pb from "../../pb";
-
+import * as pb from "../../pb/item_configurator";
 import { GetSelected, NewSelectedRowProps } from "../SelectedRow";
 import ItemConfigureInput from "../input/ItemConfigure";
 import ConfiguratorProps from "../ConfiguratorProps";
@@ -10,7 +8,7 @@ import NewItemColumns from "./Columns";
 import { prettifyObj } from "../JsonUtil";
 import { renderJson } from "./RenderRow";
 import Configurator from "../Configurator";
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from "@mui/x-data-grid";
 
 interface Props {
   cfgProps: ConfiguratorProps;
@@ -33,38 +31,37 @@ const ItemConfigure = (props: Props): React.ReactElement => {
 
   const [uniqueKeySet, setUniqueKeySet] = React.useState(initUniqueKeySet);
   const [strChanges, setStrChanges] = React.useState<string[]>([]);
-  const [idxChanges, setIdxChanges] = React.useState<
-    Array<{ [key: string]: number } | null>
-  >(changes);
+  const [idxChanges, setIdxChanges] =
+    React.useState<Array<{ [key: string]: number } | null>>(changes);
 
   const selectedRowProps = NewSelectedRowProps(selectedRowsRef);
   const uniqueKeyList = Array.from(uniqueKeySet);
   const getSelected = GetSelected(selectedRowsRef);
   const hasChanges = () => strChanges.length > 0;
 
-  const sendChanges = async () => grpcClient.update({
-    name: navPath.business,
-    refreshToken: refreshTokenRef.current,
-    items: idxChanges.reduce<pb.UpdateItem[]>(
-      (items, idxMap, i) => {
-        if (idxMap !== null) items.push({
-          typeId: getTypeId(i),
-          enabled: true,
-          jsonIdx: idxMap,
-        });
+  const sendChanges = async () =>
+    grpcClient.update({
+      name: navPath.business,
+      refreshToken: refreshTokenRef.current,
+      items: idxChanges.reduce<pb.UpdateItem[]>((items, idxMap, i) => {
+        if (idxMap !== null)
+          items.push({
+            typeId: getTypeId(i),
+            enabled: true,
+            jsonIdx: idxMap,
+          });
         return items;
-      },
-      [],
-    ),
-    json: strChanges,
-  }).response;
-  
+      }, []),
+      json: strChanges,
+    }).response;
+
   // Return the new JSON value if it exists,
   // otherwise return the old JSON string (if it exists)
   const getJson = (idx: number, key: string) => {
     const jsonStrIdx = idxChanges[idx]?.[key];
-    return jsonStrIdx === undefined ?
-      initGetJson(idx, key) : strChanges[jsonStrIdx];
+    return jsonStrIdx === undefined
+      ? initGetJson(idx, key)
+      : strChanges[jsonStrIdx];
   };
 
   // Set {key: JSON value} for every selected item
@@ -73,7 +70,7 @@ const ItemConfigure = (props: Props): React.ReactElement => {
     const newIdx = strChanges.length;
     strChanges.push(prettifyObj(val));
     // Update selected items with key: newindex
-    for (const i of getSelected()) {  
+    for (const i of getSelected()) {
       const idxMap = idxChanges[i];
       if (idxMap === null) idxChanges[i] = { [key]: newIdx };
       else idxMap[key] = newIdx;
@@ -88,13 +85,15 @@ const ItemConfigure = (props: Props): React.ReactElement => {
 
   const columns = [
     ...NewItemColumns(builderProps),
-    ...uniqueKeyList.map((key): GridColDef => ({
-      field: key,
-      headerName: key,
-      valueGetter: (params) => getJson(params.row.id, key),
-      renderCell: (params) => renderJson(getJson(params.row.id, key)),
-    })),
-  ]
+    ...uniqueKeyList.map(
+      (key): GridColDef => ({
+        field: key,
+        headerName: key,
+        valueGetter: (params) => getJson(params.row.id, key),
+        renderCell: (params) => renderJson(getJson(params.row.id, key)),
+      })
+    ),
+  ];
 
   return (
     <Configurator
@@ -106,6 +105,6 @@ const ItemConfigure = (props: Props): React.ReactElement => {
       cfgInputProps={{ keys: uniqueKeyList, throwPopup, setJson }}
     />
   );
-}
+};
 
 export default ItemConfigure;

@@ -1,4 +1,4 @@
-import Row from "./Row.js";
+import Row from "./Row";
 
 interface ItemProps {
   getMarketGroup: (idx: number) => string;
@@ -25,9 +25,4 @@ interface CharProps {
   chars: string[];
 }
 
-export type {
-  ItemProps,
-  ItemConfigureProps,
-  ItemToggleProps,
-  CharProps,
-};
+export type { ItemProps, ItemConfigureProps, ItemToggleProps, CharProps };

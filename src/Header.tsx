@@ -1,8 +1,7 @@
 import React from "react";
-
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 interface Props {
   onCancelRef: React.MutableRefObject<() => void>;
@@ -17,35 +16,26 @@ const Header = (props: Props): React.ReactElement => {
   const { onCancelRef, onSaveRef, langRef, charName, charId, langs } = props;
   return (
     <>
-      <div className={'default'}>
-        <div className={'default header-item'}>
+      <div className={"default"}>
+        <div className={"default header-item"}>
           <LangSelector
             langs={langs}
-            setLang={(lang) => langRef.current = lang}
+            setLang={(lang) => (langRef.current = lang)}
           />
         </div>
       </div>
-      <div className={'default'}>
-        <div className={'default header-item'}>
-          <HeaderButton
-            text={'Cancel'}
-            onClick={onCancelRef}
-          />
+      <div className={"default"}>
+        <div className={"default header-item"}>
+          <HeaderButton text={"Cancel"} onClick={onCancelRef} />
         </div>
       </div>
-      <div className={'default'}>
-        <div className={'default header-item'}>
-          <HeaderButton
-            text={'Save'}
-            onClick={onSaveRef}
-          />
+      <div className={"default"}>
+        <div className={"default header-item"}>
+          <HeaderButton text={"Save"} onClick={onSaveRef} />
         </div>
       </div>
-      <div className={'default'}>
-        <Char
-          charName={charName}
-          charId={charId}
-        />
+      <div className={"default"}>
+        <Char charName={charName} charId={charId} />
       </div>
     </>
   );
@@ -63,7 +53,7 @@ const LangSelector = (props: LangSelectorProps): React.ReactElement => {
 
   return (
     <Select
-      sx={{ width: '100%', height: '100%' }}
+      sx={{ width: "100%", height: "100%" }}
       value={value}
       onChange={(event: SelectChangeEvent) => {
         const lang = event.target.value;
@@ -72,16 +62,13 @@ const LangSelector = (props: LangSelectorProps): React.ReactElement => {
       }}
     >
       {langs.map((lang) => (
-        <MenuItem
-          value={lang}
-          key={lang}
-        >
+        <MenuItem value={lang} key={lang}>
           {lang}
         </MenuItem>
       ))}
     </Select>
   );
-}
+};
 
 interface HeaderButtonProps {
   text: string;
@@ -92,7 +79,7 @@ const HeaderButton = (props: HeaderButtonProps): React.ReactElement => {
   const { text, onClick } = props;
   return (
     <Button
-      sx={{ width: '100%', height: '100%' }}
+      sx={{ width: "100%", height: "100%" }}
       variant="outlined"
       onClick={() => onClick.current()}
       // onClick={onClick.current}
@@ -100,7 +87,7 @@ const HeaderButton = (props: HeaderButtonProps): React.ReactElement => {
       {text}
     </Button>
   );
-}
+};
 
 interface CharProps {
   charName: string;
@@ -112,18 +99,16 @@ const Char = (props: CharProps): React.ReactElement => {
 
   return (
     <>
-      <div className={'character-img'}>
+      <div className={"character-img"}>
         <img
-          className={'character'}
+          className={"character"}
           src={`https://images.evetech.net/characters/${charId}/portrait?size=128`}
         />
       </div>
-      <div className={'char-spacer'}/>
-      <div className={'char-name'}>
-        {charName}
-      </div>
+      <div className={"char-spacer"} />
+      <div className={"char-name"}>{charName}</div>
     </>
   );
-}
+};
 
 export default Header;

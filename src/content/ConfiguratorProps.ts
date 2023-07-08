@@ -1,7 +1,5 @@
 import React from "react";
-
-import { ItemConfiguratorClient as GrpcClient } from "../pb.client.js";
-
+import { ItemConfiguratorClient as GrpcClient } from "../pb/item_configurator.client";
 import { NavPath } from "./NavPath";
 import { Popup } from "../Popup";
 

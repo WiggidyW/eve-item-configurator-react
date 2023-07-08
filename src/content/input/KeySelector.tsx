@@ -1,7 +1,6 @@
 import React from "react";
-
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 interface Props {
   keys: string[];
@@ -14,20 +13,20 @@ const KeySelector = (props: Props): React.ReactElement => {
   const [value, setValue] = React.useState<string | null>(null);
 
   const onChange = (s: string | null) => {
-    const v: string | null = s === '' ? null : s;
+    const v: string | null = s === "" ? null : s;
     setValue(v);
     setKey(v);
-  }
+  };
 
   return (
     <Autocomplete
       sx={{
-        '& .MuiFormControl-root': {
+        "& .MuiFormControl-root": {
           height: "100%",
           marginTop: "0px",
           marginBottom: "0px",
         },
-        '& .MuiOutlinedInput-root': {
+        "& .MuiOutlinedInput-root": {
           height: "100%",
         },
         width: "100%",
@@ -39,14 +38,10 @@ const KeySelector = (props: Props): React.ReactElement => {
       freeSolo={true}
       options={keys}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Key"
-          variant="outlined" 
-        />
+        <TextField {...params} label="Key" variant="outlined" />
       )}
     />
   );
-}
+};
 
 export default KeySelector;
