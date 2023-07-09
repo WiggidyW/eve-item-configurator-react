@@ -12,6 +12,8 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Rep } from "./buyback";
+import { ExchangeContract } from "./weve_esi";
 /**
  * @generated from protobuf message item_configurator_proto.ListItem
  */
@@ -293,6 +295,65 @@ export interface DelCharactersReq {
      * @generated from protobuf field: repeated string characters = 5;
      */
     characters: string[];
+}
+/**
+ * @generated from protobuf message item_configurator_proto.BuybackContract
+ */
+export interface BuybackContract {
+    /**
+     * @generated from protobuf field: weve_esi_proto.ExchangeContract esi_contract = 1;
+     */
+    esiContract?: ExchangeContract;
+    /**
+     * @generated from protobuf field: buyback_proto.Rep check_contract = 2;
+     */
+    checkContract?: Rep;
+    /**
+     * @generated from protobuf field: buyback_proto.Rep buy_contract = 3;
+     */
+    buyContract?: Rep;
+    /**
+     * @generated from protobuf field: string hash_code = 4;
+     */
+    hashCode: string; // hash code of the contract
+}
+/**
+ * @generated from protobuf message item_configurator_proto.BuybackContractsReq
+ */
+export interface BuybackContractsReq {
+    /**
+     * @generated from protobuf field: bool include_check = 1;
+     */
+    includeCheck: boolean;
+    /**
+     * @generated from protobuf field: bool include_buy = 2;
+     */
+    includeBuy: boolean;
+    /**
+     * @generated from protobuf field: string refresh_token = 3;
+     */
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
+     * @generated from protobuf field: string language = 4;
+     */
+    language: string; // language for the contract
+}
+/**
+ * @generated from protobuf message item_configurator_proto.BuybackContractsRep
+ */
+export interface BuybackContractsRep {
+    /**
+     * @generated from protobuf field: repeated item_configurator_proto.BuybackContract contracts = 1;
+     */
+    contracts: BuybackContract[];
+    /**
+     * @generated from protobuf field: string refresh_token = 2;
+     */
+    refreshToken: string; // ESI refresh token (for authentication)
+    /**
+     * @generated from protobuf field: bool authorized = 3;
+     */
+    authorized: boolean; // true if the refresh token is authorized
 }
 /**
  * @generated from protobuf enum item_configurator_proto.Query
@@ -1247,6 +1308,203 @@ class DelCharactersReq$Type extends MessageType<DelCharactersReq> {
  * @generated MessageType for protobuf message item_configurator_proto.DelCharactersReq
  */
 export const DelCharactersReq = new DelCharactersReq$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BuybackContract$Type extends MessageType<BuybackContract> {
+    constructor() {
+        super("item_configurator_proto.BuybackContract", [
+            { no: 1, name: "esi_contract", kind: "message", T: () => ExchangeContract },
+            { no: 2, name: "check_contract", kind: "message", T: () => Rep },
+            { no: 3, name: "buy_contract", kind: "message", T: () => Rep },
+            { no: 4, name: "hash_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<BuybackContract>): BuybackContract {
+        const message = { hashCode: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<BuybackContract>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BuybackContract): BuybackContract {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* weve_esi_proto.ExchangeContract esi_contract */ 1:
+                    message.esiContract = ExchangeContract.internalBinaryRead(reader, reader.uint32(), options, message.esiContract);
+                    break;
+                case /* buyback_proto.Rep check_contract */ 2:
+                    message.checkContract = Rep.internalBinaryRead(reader, reader.uint32(), options, message.checkContract);
+                    break;
+                case /* buyback_proto.Rep buy_contract */ 3:
+                    message.buyContract = Rep.internalBinaryRead(reader, reader.uint32(), options, message.buyContract);
+                    break;
+                case /* string hash_code */ 4:
+                    message.hashCode = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: BuybackContract, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* weve_esi_proto.ExchangeContract esi_contract = 1; */
+        if (message.esiContract)
+            ExchangeContract.internalBinaryWrite(message.esiContract, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* buyback_proto.Rep check_contract = 2; */
+        if (message.checkContract)
+            Rep.internalBinaryWrite(message.checkContract, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* buyback_proto.Rep buy_contract = 3; */
+        if (message.buyContract)
+            Rep.internalBinaryWrite(message.buyContract, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* string hash_code = 4; */
+        if (message.hashCode !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.hashCode);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message item_configurator_proto.BuybackContract
+ */
+export const BuybackContract = new BuybackContract$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BuybackContractsReq$Type extends MessageType<BuybackContractsReq> {
+    constructor() {
+        super("item_configurator_proto.BuybackContractsReq", [
+            { no: 1, name: "include_check", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "include_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<BuybackContractsReq>): BuybackContractsReq {
+        const message = { includeCheck: false, includeBuy: false, refreshToken: "", language: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<BuybackContractsReq>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BuybackContractsReq): BuybackContractsReq {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool include_check */ 1:
+                    message.includeCheck = reader.bool();
+                    break;
+                case /* bool include_buy */ 2:
+                    message.includeBuy = reader.bool();
+                    break;
+                case /* string refresh_token */ 3:
+                    message.refreshToken = reader.string();
+                    break;
+                case /* string language */ 4:
+                    message.language = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: BuybackContractsReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool include_check = 1; */
+        if (message.includeCheck !== false)
+            writer.tag(1, WireType.Varint).bool(message.includeCheck);
+        /* bool include_buy = 2; */
+        if (message.includeBuy !== false)
+            writer.tag(2, WireType.Varint).bool(message.includeBuy);
+        /* string refresh_token = 3; */
+        if (message.refreshToken !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.refreshToken);
+        /* string language = 4; */
+        if (message.language !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.language);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message item_configurator_proto.BuybackContractsReq
+ */
+export const BuybackContractsReq = new BuybackContractsReq$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BuybackContractsRep$Type extends MessageType<BuybackContractsRep> {
+    constructor() {
+        super("item_configurator_proto.BuybackContractsRep", [
+            { no: 1, name: "contracts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => BuybackContract },
+            { no: 2, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "authorized", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<BuybackContractsRep>): BuybackContractsRep {
+        const message = { contracts: [], refreshToken: "", authorized: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<BuybackContractsRep>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BuybackContractsRep): BuybackContractsRep {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated item_configurator_proto.BuybackContract contracts */ 1:
+                    message.contracts.push(BuybackContract.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string refresh_token */ 2:
+                    message.refreshToken = reader.string();
+                    break;
+                case /* bool authorized */ 3:
+                    message.authorized = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: BuybackContractsRep, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated item_configurator_proto.BuybackContract contracts = 1; */
+        for (let i = 0; i < message.contracts.length; i++)
+            BuybackContract.internalBinaryWrite(message.contracts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string refresh_token = 2; */
+        if (message.refreshToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.refreshToken);
+        /* bool authorized = 3; */
+        if (message.authorized !== false)
+            writer.tag(3, WireType.Varint).bool(message.authorized);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message item_configurator_proto.BuybackContractsRep
+ */
+export const BuybackContractsRep = new BuybackContractsRep$Type();
 /**
  * @generated ServiceType for protobuf service item_configurator_proto.ItemConfigurator
  */
@@ -1255,5 +1513,6 @@ export const ItemConfigurator = new ServiceType("item_configurator_proto.ItemCon
     { name: "List", options: {}, I: ListReq, O: ListRep },
     { name: "ListCharacters", options: {}, I: ListCharactersReq, O: ListCharactersRep },
     { name: "AddCharacters", options: {}, I: AddCharactersReq, O: AddCharactersRep },
-    { name: "DelCharacters", options: {}, I: DelCharactersReq, O: DelCharactersRep }
+    { name: "DelCharacters", options: {}, I: DelCharactersReq, O: DelCharactersRep },
+    { name: "BuybackContracts", options: {}, I: BuybackContractsReq, O: BuybackContractsRep }
 ]);

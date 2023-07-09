@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Home from "./content/index";
+import Home from "./content/items/Home";
 import { Popup, PopupThrower, Err } from "./Popup";
 import Header from "./Header";
 import {
@@ -14,8 +14,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import "./App.css";
 import Navigation from "./Navigation";
+import Authorization from "./content/authorization/Authorization";
 
-const TABS = ["Home", "Buyback Contracts", "Authorization"];
+const TABS = ["Items", "Buyback Contracts", "Authorization"];
 
 const Theme = createTheme({
   palette: {
@@ -93,16 +94,47 @@ const App = (props: Props): React.ReactElement => {
     return <div className={"default"}>{char.refreshToken}</div>;
   }
 
-  /* else if (char !== null && esiApp === null) { */
+  // char !== null && esiApp === null
+
+  const renderTab = (tab: string): React.ReactElement => {
+    switch (tab) {
+      case "Items":
+        return (
+          <Home
+            refreshTokenRef={refreshTokenRef}
+            businesses={businesses}
+            onCancelRef={onCancelRef}
+            onSaveRef={onSaveRef}
+            throwPopup={setPopup}
+            grpcClient={grpcClient}
+            langRef={langRef}
+          />
+        );
+      case "Authorization":
+        return (
+          <Authorization
+            refreshTokenRef={refreshTokenRef}
+            businesses={businesses}
+            onCancelRef={onCancelRef}
+            onSaveRef={onSaveRef}
+            throwPopup={setPopup}
+            grpcClient={grpcClient}
+            langRef={langRef}
+          />
+        );
+      case "Buyback Contracts":
+        return <div>Not implemented</div>;
+      default:
+        throw new Error("Invalid tab");
+    }
+  };
 
   // Ensure that these do nothing at this point.
   onCancelRef.current = () => {};
   onSaveRef.current = () => {};
-
   // Initialize this once the first time
   if (initRefreshTokenRef.current === null)
     initRefreshTokenRef.current = char.refreshToken;
-
   // Cast to a type that does not have the null union option
   const refreshTokenRef = initRefreshTokenRef as React.MutableRefObject<string>;
 
@@ -127,17 +159,7 @@ const App = (props: Props): React.ReactElement => {
           />
         </div>
         <div className={"cfg-height-spacer"} />
-        <div className={"default content"}>
-          <Home
-            refreshTokenRef={refreshTokenRef}
-            businesses={businesses}
-            onCancelRef={onCancelRef}
-            onSaveRef={onSaveRef}
-            langRef={langRef}
-            throwPopup={setPopup}
-            grpcClient={grpcClient}
-          />
-        </div>
+        <div className={"default content"}>{renderTab(tab)}</div>
         <div className={"cfg-height-spacer"} />
       </div>
     </ThemeProvider>

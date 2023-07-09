@@ -1,6 +1,6 @@
 import React from "react";
-import NavPath, { NavStep, NavPathBuilder, BusinessStepStr } from "./NavPath";
-import Selector from "../input/Selector";
+import NavPath, { NavStep, NavPathBuilder, BusinessStepStr } from "../NavPath";
+import Selector from "../../input/Selector";
 
 interface Props {
   businesses: string[];
@@ -20,12 +20,15 @@ export default function NavStepper(props: Props): React.ReactElement {
   let choices: string[];
   let onSelect: (s: string) => void;
 
+  console.log(navPathBuilder);
+
   // If undefined, then we need to get the business and initialize the builder.
   if (navPathBuilder === undefined) {
     description = BusinessStepStr;
     [label, choices] = ["Business", businesses];
+    // Auto-select the next step as well (item/character? => item)
     onSelect = (business: string) =>
-      setNavPathBuilder(new NavPathBuilder(business));
+      setNavPathBuilder(new NavPathBuilder(business).addStep(true));
 
     // Otherwise, determine which step we're on and what the choices are.
   } else {

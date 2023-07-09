@@ -2,10 +2,10 @@ import React from "react";
 import { Popup, NotAuthorized, Err } from "../Popup";
 import * as pb from "../pb/item_configurator";
 import ConfiguratorProps from "./ConfiguratorProps.js";
-import ItemConfigure from "./item/Configure.js";
-import ItemToggle from "./item/Toggle.js";
-import CharAdd from "./char/Add.js";
-import CharDel from "./char/Del.js";
+import ItemConfigure from "./items/Configure.js";
+import ItemToggle from "./items/Toggle.js";
+import CharAdd from "./authorization/Add.js";
+import CharDel from "./authorization/Del.js";
 import {
   BuildItemConfigureProps,
   BuildItemToggleProps,

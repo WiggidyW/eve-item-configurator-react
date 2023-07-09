@@ -1,9 +1,9 @@
 import React, { MutableRefObject } from "react";
-import { ItemConfiguratorClient as GrpcClient } from "../pb/item_configurator.client";
+import { ItemConfiguratorClient as GrpcClient } from "../../pb/item_configurator.client";
 import NavStepper from "./NavStepper";
-import NavPath from "./NavPath";
-import Loader from "./Loader";
-import { Popup } from "../Popup";
+import NavPath from "../NavPath";
+import Loader from "../Loader";
+import { Popup } from "../../Popup";
 
 // Home -> NavStepper -> Home -> Loader -> ConfiguratorVariant -> Configurator
 

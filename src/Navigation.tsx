@@ -65,20 +65,23 @@ const Navigation = (props: {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "48px" }}>
-      <Box sx={{ bgcolor: "#2e1534" }}>
-        <StyledTabs
-          value={value}
-          onChange={handleChange}
-          aria-label="styled tabs example"
-        >
-          {tabs.map((tab) => (
-            <StyledTab key={tab} label={tab} />
-          ))}
-        </StyledTabs>
-        <Box sx={{ p: tabs.length }} />
+    <>
+      <Box sx={{ width: "100%", height: "48px" }}>
+        <Box sx={{ bgcolor: "#00000f" }}>
+          <StyledTabs
+            value={value}
+            onChange={handleChange}
+            aria-label="styled tabs example"
+          >
+            {tabs.map((tab) => (
+              <StyledTab key={tab} label={tab} />
+            ))}
+          </StyledTabs>
+          <Box sx={{ p: tabs.length }} />
+        </Box>
       </Box>
-    </Box>
+      <div className="nav-header-divider" />
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import FullButton from "./input/FullButton";
+import { HeaderButton } from "./input/Button";
 
 interface Props {
   onCancelRef: React.MutableRefObject<() => void>;
@@ -26,12 +26,12 @@ const Header = (props: Props): React.ReactElement => {
       </div>
       <div className={"default"}>
         <div className={"default header-item"}>
-          <FullButton text={"Cancel"} onClick={onCancelRef} />
+          <HeaderButton text={"Cancel"} onClick={onCancelRef} />
         </div>
       </div>
       <div className={"default"}>
         <div className={"default header-item"}>
-          <FullButton text={"Save"} onClick={onSaveRef} />
+          <HeaderButton text={"Save"} onClick={onSaveRef} />
         </div>
       </div>
       <div className={"default"}>

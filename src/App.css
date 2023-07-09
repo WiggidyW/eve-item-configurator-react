@@ -97,6 +97,20 @@ div .nav-parent {
   flex-direction: column;
 }
 
+div .form-container {
+  height: 10%;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 64px;
+  margin-top: 16px;
+}
+
+div .half-width {
+  width: 20%;
+}
+
 div .nav-description {
   font-size: calc(16px + 0.1vw);
   height: 50%;
@@ -182,4 +196,14 @@ div .top {
 
 div .bottom {
   align-items: flex-start;
+}
+
+div .tooltip {
+  font-size: calc(12px + 0.1vw);
+}
+
+div .nav-header-divider {
+  min-height: 4px;
+  width: 100%;
+  background-color: hsl(220, 25%, 11%);
 }

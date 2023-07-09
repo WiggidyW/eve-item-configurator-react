@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ItemConfigurator } from "./item_configurator";
+import type { BuybackContractsRep } from "./item_configurator";
+import type { BuybackContractsReq } from "./item_configurator";
 import type { DelCharactersRep } from "./item_configurator";
 import type { DelCharactersReq } from "./item_configurator";
 import type { AddCharactersRep } from "./item_configurator";
@@ -41,6 +43,10 @@ export interface IItemConfiguratorClient {
      * @generated from protobuf rpc: DelCharacters(item_configurator_proto.DelCharactersReq) returns (item_configurator_proto.DelCharactersRep);
      */
     delCharacters(input: DelCharactersReq, options?: RpcOptions): UnaryCall<DelCharactersReq, DelCharactersRep>;
+    /**
+     * @generated from protobuf rpc: BuybackContracts(item_configurator_proto.BuybackContractsReq) returns (item_configurator_proto.BuybackContractsRep);
+     */
+    buybackContracts(input: BuybackContractsReq, options?: RpcOptions): UnaryCall<BuybackContractsReq, BuybackContractsRep>;
 }
 /**
  * @generated from protobuf service item_configurator_proto.ItemConfigurator
@@ -85,5 +91,12 @@ export class ItemConfiguratorClient implements IItemConfiguratorClient, ServiceI
     delCharacters(input: DelCharactersReq, options?: RpcOptions): UnaryCall<DelCharactersReq, DelCharactersRep> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<DelCharactersReq, DelCharactersRep>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: BuybackContracts(item_configurator_proto.BuybackContractsReq) returns (item_configurator_proto.BuybackContractsRep);
+     */
+    buybackContracts(input: BuybackContractsReq, options?: RpcOptions): UnaryCall<BuybackContractsReq, BuybackContractsRep> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<BuybackContractsReq, BuybackContractsRep>("unary", this._transport, method, opt, input);
     }
 }
