@@ -15,8 +15,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./App.css";
 import Navigation from "./Navigation";
 import Authorization from "./content/authorization/Authorization";
+import BuybackContractsFetcher from "./content/buyback-contracts/Fetcher";
 
-const TABS = ["Items", "Buyback Contracts", "Authorization"];
+const TABS = ["Items", "Authorization", "Buyback Contracts"];
 
 const Theme = createTheme({
   palette: {
@@ -96,7 +97,62 @@ const App = (props: Props): React.ReactElement => {
 
   // char !== null && esiApp === null
 
-  const renderTab = (tab: string): React.ReactElement => {
+  // Ensure that these do nothing at this point.
+  onCancelRef.current = () => {};
+  onSaveRef.current = () => {};
+  // Initialize this once the first time
+  if (initRefreshTokenRef.current === null)
+    initRefreshTokenRef.current = char.refreshToken;
+  // Cast to a type that does not have the null union option
+  const refreshTokenRef = initRefreshTokenRef as React.MutableRefObject<string>;
+
+  const renderHeader = (): React.ReactElement => {
+    switch (tab) {
+      case "Items":
+        return (
+          <Header
+            cancelName={"Cancel"}
+            saveName={"Save"}
+            onCancelRef={onCancelRef}
+            onSaveRef={onSaveRef}
+            langRef={langRef}
+            langs={languages}
+            charName={char.characterName}
+            charId={char.characterId}
+          />
+        );
+      case "Authorization":
+        return (
+          <Header
+            cancelName={"Cancel"}
+            saveName={"Save"}
+            onCancelRef={onCancelRef}
+            onSaveRef={onSaveRef}
+            langRef={langRef}
+            langs={languages}
+            charName={char.characterName}
+            charId={char.characterId}
+          />
+        );
+      case "Buyback Contracts":
+        return (
+          <Header
+            cancelName={"Back"}
+            saveName={"Reload"}
+            onCancelRef={onCancelRef}
+            onSaveRef={onSaveRef}
+            langRef={langRef}
+            langs={languages}
+            charName={char.characterName}
+            charId={char.characterId}
+          />
+        );
+      default:
+        throw new Error("Invalid tab");
+    }
+  };
+
+  const renderTab = (): React.ReactElement => {
     switch (tab) {
       case "Items":
         return (
@@ -123,20 +179,20 @@ const App = (props: Props): React.ReactElement => {
           />
         );
       case "Buyback Contracts":
-        return <div>Not implemented</div>;
+        return (
+          <BuybackContractsFetcher
+            refreshTokenRef={refreshTokenRef}
+            onBackRef={onCancelRef}
+            onReloadRef={onSaveRef}
+            throwPopup={setPopup}
+            grpcClient={grpcClient}
+            langRef={langRef}
+          />
+        );
       default:
         throw new Error("Invalid tab");
     }
   };
-
-  // Ensure that these do nothing at this point.
-  onCancelRef.current = () => {};
-  onSaveRef.current = () => {};
-  // Initialize this once the first time
-  if (initRefreshTokenRef.current === null)
-    initRefreshTokenRef.current = char.refreshToken;
-  // Cast to a type that does not have the null union option
-  const refreshTokenRef = initRefreshTokenRef as React.MutableRefObject<string>;
 
   // Return the admin page content
   return (
@@ -148,18 +204,9 @@ const App = (props: Props): React.ReactElement => {
           close={() => setPopup(undefined)}
         />
         <Navigation tabs={TABS} onSelect={(tab: string) => setTab(tab)} />
-        <div className={"default header"}>
-          <Header
-            onCancelRef={onCancelRef}
-            onSaveRef={onSaveRef}
-            langRef={langRef}
-            langs={languages}
-            charName={char.characterName}
-            charId={char.characterId}
-          />
-        </div>
+        <div className={"default header"}>{renderHeader()}</div>
         <div className={"cfg-height-spacer"} />
-        <div className={"default content"}>{renderTab(tab)}</div>
+        <div className={"default content"}>{renderTab()}</div>
         <div className={"cfg-height-spacer"} />
       </div>
     </ThemeProvider>
