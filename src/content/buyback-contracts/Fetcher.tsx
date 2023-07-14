@@ -1,4 +1,10 @@
-import { MutableRefObject, ReactElement, useEffect, useState } from "react";
+import {
+  MutableRefObject,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ItemConfiguratorClient as GrpcClient } from "../../pb/item_configurator.client";
 import { Err, NotAuthorized, Popup } from "../../Popup";
 import * as pb from "../../pb/item_configurator";
@@ -31,37 +37,16 @@ const BuybackContractsFetcher = (props: {
     langRef,
   } = props;
 
+  const fetchingOrErrRef = useRef(false);
   const [rep, setRep] = useState<RepAndLocationNames>();
+
+  useEffect(() => {
+    if (rep === undefined && !fetchingOrErrRef.current) fetchAndHandle();
+  }, []);
 
   onReloadRef.current = () => {
     setRep(undefined);
     fetchAndHandle();
-  };
-
-  // Dev Version
-  // useEffect(() => {
-  //   const storageRep = localStorage.getItem("buybackContractsRep");
-  //   if (storageRep !== null) {
-  //     const parsed = JSON.parse(storageRep) as pb.BuybackContractsRep;
-  //     setRep(parsed);
-  //   }
-  // }, []);
-
-  // Prod Version
-  useEffect(() => {
-    fetchAndHandle();
-  }, []);
-
-  const fetchAndHandle = async (): Promise<void> => {
-    const rep = await fetchRep();
-    if (rep === null) return;
-    const names = await fetchLocationNames(rep);
-    if (names === null) return;
-    setRep({
-      rep,
-      systemNames: names.systemNames,
-      regionNames: names.regionNames,
-    });
   };
 
   const fetchRep = async (
@@ -154,6 +139,25 @@ const BuybackContractsFetcher = (props: {
     }
 
     return { systemNames, regionNames };
+  };
+
+  const fetchAndHandle = async (): Promise<void> => {
+    const fetchAndHandleInner = async (): Promise<boolean> => {
+      const rep = await fetchRep();
+      if (rep === null) return false;
+      const names = await fetchLocationNames(rep);
+      if (names === null) return false;
+      setRep({
+        rep,
+        systemNames: names.systemNames,
+        regionNames: names.regionNames,
+      });
+      return true;
+    };
+
+    fetchingOrErrRef.current = true;
+    const ok = await fetchAndHandleInner();
+    if (ok) fetchingOrErrRef.current = false;
   };
 
   if (rep === undefined) return <CircularProgress />;
