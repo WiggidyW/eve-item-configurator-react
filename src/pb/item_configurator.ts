@@ -322,19 +322,23 @@ export interface BuybackContract {
  */
 export interface BuybackContractsReq {
     /**
-     * @generated from protobuf field: bool include_check = 1;
+     * @generated from protobuf field: bool include_items = 1;
+     */
+    includeItems: boolean;
+    /**
+     * @generated from protobuf field: bool include_check = 2;
      */
     includeCheck: boolean;
     /**
-     * @generated from protobuf field: bool include_buy = 2;
+     * @generated from protobuf field: bool include_buy = 3;
      */
     includeBuy: boolean;
     /**
-     * @generated from protobuf field: string refresh_token = 3;
+     * @generated from protobuf field: string refresh_token = 4;
      */
     refreshToken: string; // ESI refresh token (for authentication)
     /**
-     * @generated from protobuf field: string language = 4;
+     * @generated from protobuf field: string language = 5;
      */
     language: string; // language for the contract
 }
@@ -1380,14 +1384,15 @@ export const BuybackContract = new BuybackContract$Type();
 class BuybackContractsReq$Type extends MessageType<BuybackContractsReq> {
     constructor() {
         super("item_configurator_proto.BuybackContractsReq", [
-            { no: 1, name: "include_check", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "include_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "include_items", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "include_check", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "include_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<BuybackContractsReq>): BuybackContractsReq {
-        const message = { includeCheck: false, includeBuy: false, refreshToken: "", language: "" };
+        const message = { includeItems: false, includeCheck: false, includeBuy: false, refreshToken: "", language: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<BuybackContractsReq>(this, message, value);
@@ -1398,16 +1403,19 @@ class BuybackContractsReq$Type extends MessageType<BuybackContractsReq> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool include_check */ 1:
+                case /* bool include_items */ 1:
+                    message.includeItems = reader.bool();
+                    break;
+                case /* bool include_check */ 2:
                     message.includeCheck = reader.bool();
                     break;
-                case /* bool include_buy */ 2:
+                case /* bool include_buy */ 3:
                     message.includeBuy = reader.bool();
                     break;
-                case /* string refresh_token */ 3:
+                case /* string refresh_token */ 4:
                     message.refreshToken = reader.string();
                     break;
-                case /* string language */ 4:
+                case /* string language */ 5:
                     message.language = reader.string();
                     break;
                 default:
@@ -1422,18 +1430,21 @@ class BuybackContractsReq$Type extends MessageType<BuybackContractsReq> {
         return message;
     }
     internalBinaryWrite(message: BuybackContractsReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool include_check = 1; */
+        /* bool include_items = 1; */
+        if (message.includeItems !== false)
+            writer.tag(1, WireType.Varint).bool(message.includeItems);
+        /* bool include_check = 2; */
         if (message.includeCheck !== false)
-            writer.tag(1, WireType.Varint).bool(message.includeCheck);
-        /* bool include_buy = 2; */
+            writer.tag(2, WireType.Varint).bool(message.includeCheck);
+        /* bool include_buy = 3; */
         if (message.includeBuy !== false)
-            writer.tag(2, WireType.Varint).bool(message.includeBuy);
-        /* string refresh_token = 3; */
+            writer.tag(3, WireType.Varint).bool(message.includeBuy);
+        /* string refresh_token = 4; */
         if (message.refreshToken !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.refreshToken);
-        /* string language = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.refreshToken);
+        /* string language = 5; */
         if (message.language !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.language);
+            writer.tag(5, WireType.LengthDelimited).string(message.language);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

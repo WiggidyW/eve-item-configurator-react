@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { WeveEsi } from "./weve_esi";
+import type { MultiMarketOrdersRep } from "./weve_esi";
+import type { MultiMarketOrdersReq } from "./weve_esi";
 import type { ExchangeContractsRep } from "./weve_esi";
 import type { ExchangeContractsReq } from "./weve_esi";
 import type { TransactionsRep } from "./weve_esi";
@@ -65,6 +67,10 @@ export interface IWeveEsiClient {
      * @generated from protobuf rpc: ExchangeContracts(weve_esi_proto.ExchangeContractsReq) returns (weve_esi_proto.ExchangeContractsRep);
      */
     exchangeContracts(input: ExchangeContractsReq, options?: RpcOptions): UnaryCall<ExchangeContractsReq, ExchangeContractsRep>;
+    /**
+     * @generated from protobuf rpc: MultiMarketOrders(weve_esi_proto.MultiMarketOrdersReq) returns (weve_esi_proto.MultiMarketOrdersRep);
+     */
+    multiMarketOrders(input: MultiMarketOrdersReq, options?: RpcOptions): UnaryCall<MultiMarketOrdersReq, MultiMarketOrdersRep>;
 }
 /**
  * @generated from protobuf service weve_esi_proto.WeveEsi
@@ -137,5 +143,12 @@ export class WeveEsiClient implements IWeveEsiClient, ServiceInfo {
     exchangeContracts(input: ExchangeContractsReq, options?: RpcOptions): UnaryCall<ExchangeContractsReq, ExchangeContractsRep> {
         const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<ExchangeContractsReq, ExchangeContractsRep>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: MultiMarketOrders(weve_esi_proto.MultiMarketOrdersReq) returns (weve_esi_proto.MultiMarketOrdersRep);
+     */
+    multiMarketOrders(input: MultiMarketOrdersReq, options?: RpcOptions): UnaryCall<MultiMarketOrdersReq, MultiMarketOrdersRep> {
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        return stackIntercept<MultiMarketOrdersReq, MultiMarketOrdersRep>("unary", this._transport, method, opt, input);
     }
 }

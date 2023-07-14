@@ -71,6 +71,37 @@ export interface MarketOrdersReq {
     buy: boolean;
 }
 /**
+ * @generated from protobuf message weve_esi_proto.MultiMarketOrderRep
+ */
+export interface MultiMarketOrderRep {
+    /**
+     * @generated from protobuf field: weve_esi_proto.MarketOrdersReq req = 1;
+     */
+    req?: MarketOrdersReq;
+    /**
+     * @generated from protobuf field: weve_esi_proto.MarketOrdersRep rep = 2;
+     */
+    rep?: MarketOrdersRep;
+}
+/**
+ * @generated from protobuf message weve_esi_proto.MultiMarketOrdersRep
+ */
+export interface MultiMarketOrdersRep {
+    /**
+     * @generated from protobuf field: repeated weve_esi_proto.MultiMarketOrderRep inner = 1;
+     */
+    inner: MultiMarketOrderRep[];
+}
+/**
+ * @generated from protobuf message weve_esi_proto.MultiMarketOrdersReq
+ */
+export interface MultiMarketOrdersReq {
+    /**
+     * @generated from protobuf field: repeated weve_esi_proto.MarketOrdersReq inner = 1;
+     */
+    inner: MarketOrdersReq[];
+}
+/**
  * uint32 is typeid
  *
  * @generated from protobuf message weve_esi_proto.AdjustedPriceRep
@@ -513,6 +544,14 @@ export interface ExchangeContract {
      * @generated from protobuf field: bool is_corp = 11;
      */
     isCorp: boolean;
+    /**
+     * @generated from protobuf field: uint32 system_id = 12;
+     */
+    systemId: number;
+    /**
+     * @generated from protobuf field: uint32 region_id = 13;
+     */
+    regionId: number;
 }
 /**
  * @generated from protobuf message weve_esi_proto.ExchangeContractsRep
@@ -539,6 +578,10 @@ export interface ExchangeContractsReq {
      * @generated from protobuf field: bool active_only = 3;
      */
     activeOnly: boolean;
+    /**
+     * @generated from protobuf field: bool include_items = 4;
+     */
+    includeItems: boolean;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Entity$Type extends MessageType<Entity> {
@@ -763,6 +806,154 @@ class MarketOrdersReq$Type extends MessageType<MarketOrdersReq> {
  * @generated MessageType for protobuf message weve_esi_proto.MarketOrdersReq
  */
 export const MarketOrdersReq = new MarketOrdersReq$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MultiMarketOrderRep$Type extends MessageType<MultiMarketOrderRep> {
+    constructor() {
+        super("weve_esi_proto.MultiMarketOrderRep", [
+            { no: 1, name: "req", kind: "message", T: () => MarketOrdersReq },
+            { no: 2, name: "rep", kind: "message", T: () => MarketOrdersRep }
+        ]);
+    }
+    create(value?: PartialMessage<MultiMarketOrderRep>): MultiMarketOrderRep {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<MultiMarketOrderRep>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MultiMarketOrderRep): MultiMarketOrderRep {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* weve_esi_proto.MarketOrdersReq req */ 1:
+                    message.req = MarketOrdersReq.internalBinaryRead(reader, reader.uint32(), options, message.req);
+                    break;
+                case /* weve_esi_proto.MarketOrdersRep rep */ 2:
+                    message.rep = MarketOrdersRep.internalBinaryRead(reader, reader.uint32(), options, message.rep);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MultiMarketOrderRep, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* weve_esi_proto.MarketOrdersReq req = 1; */
+        if (message.req)
+            MarketOrdersReq.internalBinaryWrite(message.req, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* weve_esi_proto.MarketOrdersRep rep = 2; */
+        if (message.rep)
+            MarketOrdersRep.internalBinaryWrite(message.rep, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message weve_esi_proto.MultiMarketOrderRep
+ */
+export const MultiMarketOrderRep = new MultiMarketOrderRep$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MultiMarketOrdersRep$Type extends MessageType<MultiMarketOrdersRep> {
+    constructor() {
+        super("weve_esi_proto.MultiMarketOrdersRep", [
+            { no: 1, name: "inner", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MultiMarketOrderRep }
+        ]);
+    }
+    create(value?: PartialMessage<MultiMarketOrdersRep>): MultiMarketOrdersRep {
+        const message = { inner: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<MultiMarketOrdersRep>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MultiMarketOrdersRep): MultiMarketOrdersRep {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated weve_esi_proto.MultiMarketOrderRep inner */ 1:
+                    message.inner.push(MultiMarketOrderRep.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MultiMarketOrdersRep, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated weve_esi_proto.MultiMarketOrderRep inner = 1; */
+        for (let i = 0; i < message.inner.length; i++)
+            MultiMarketOrderRep.internalBinaryWrite(message.inner[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message weve_esi_proto.MultiMarketOrdersRep
+ */
+export const MultiMarketOrdersRep = new MultiMarketOrdersRep$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MultiMarketOrdersReq$Type extends MessageType<MultiMarketOrdersReq> {
+    constructor() {
+        super("weve_esi_proto.MultiMarketOrdersReq", [
+            { no: 1, name: "inner", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MarketOrdersReq }
+        ]);
+    }
+    create(value?: PartialMessage<MultiMarketOrdersReq>): MultiMarketOrdersReq {
+        const message = { inner: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<MultiMarketOrdersReq>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MultiMarketOrdersReq): MultiMarketOrdersReq {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated weve_esi_proto.MarketOrdersReq inner */ 1:
+                    message.inner.push(MarketOrdersReq.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MultiMarketOrdersReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated weve_esi_proto.MarketOrdersReq inner = 1; */
+        for (let i = 0; i < message.inner.length; i++)
+            MarketOrdersReq.internalBinaryWrite(message.inner[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message weve_esi_proto.MultiMarketOrdersReq
+ */
+export const MultiMarketOrdersReq = new MultiMarketOrdersReq$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AdjustedPriceRep$Type extends MessageType<AdjustedPriceRep> {
     constructor() {
@@ -2413,11 +2604,13 @@ class ExchangeContract$Type extends MessageType<ExchangeContract> {
             { no: 8, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 9, name: "char_id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 10, name: "corp_id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 11, name: "is_corp", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 11, name: "is_corp", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "system_id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 13, name: "region_id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
     create(value?: PartialMessage<ExchangeContract>): ExchangeContract {
-        const message = { items: [], locationId: 0n, description: "", price: 0, reward: 0, expires: 0n, issued: 0n, volume: 0, charId: 0, corpId: 0, isCorp: false };
+        const message = { items: [], locationId: 0n, description: "", price: 0, reward: 0, expires: 0n, issued: 0n, volume: 0, charId: 0, corpId: 0, isCorp: false, systemId: 0, regionId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ExchangeContract>(this, message, value);
@@ -2460,6 +2653,12 @@ class ExchangeContract$Type extends MessageType<ExchangeContract> {
                     break;
                 case /* bool is_corp */ 11:
                     message.isCorp = reader.bool();
+                    break;
+                case /* uint32 system_id */ 12:
+                    message.systemId = reader.uint32();
+                    break;
+                case /* uint32 region_id */ 13:
+                    message.regionId = reader.uint32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2506,6 +2705,12 @@ class ExchangeContract$Type extends MessageType<ExchangeContract> {
         /* bool is_corp = 11; */
         if (message.isCorp !== false)
             writer.tag(11, WireType.Varint).bool(message.isCorp);
+        /* uint32 system_id = 12; */
+        if (message.systemId !== 0)
+            writer.tag(12, WireType.Varint).uint32(message.systemId);
+        /* uint32 region_id = 13; */
+        if (message.regionId !== 0)
+            writer.tag(13, WireType.Varint).uint32(message.regionId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2569,11 +2774,12 @@ class ExchangeContractsReq$Type extends MessageType<ExchangeContractsReq> {
         super("weve_esi_proto.ExchangeContractsReq", [
             { no: 1, name: "characters", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Entity },
             { no: 2, name: "corporations", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Entity },
-            { no: 3, name: "active_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "active_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "include_items", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<ExchangeContractsReq>): ExchangeContractsReq {
-        const message = { characters: [], corporations: [], activeOnly: false };
+        const message = { characters: [], corporations: [], activeOnly: false, includeItems: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ExchangeContractsReq>(this, message, value);
@@ -2592,6 +2798,9 @@ class ExchangeContractsReq$Type extends MessageType<ExchangeContractsReq> {
                     break;
                 case /* bool active_only */ 3:
                     message.activeOnly = reader.bool();
+                    break;
+                case /* bool include_items */ 4:
+                    message.includeItems = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2614,6 +2823,9 @@ class ExchangeContractsReq$Type extends MessageType<ExchangeContractsReq> {
         /* bool active_only = 3; */
         if (message.activeOnly !== false)
             writer.tag(3, WireType.Varint).bool(message.activeOnly);
+        /* bool include_items = 4; */
+        if (message.includeItems !== false)
+            writer.tag(4, WireType.Varint).bool(message.includeItems);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2636,5 +2848,6 @@ export const WeveEsi = new ServiceType("weve_esi_proto.WeveEsi", [
     { name: "Skills", options: {}, I: SkillsReq, O: SkillsRep },
     { name: "SystemIndex", options: {}, I: SystemIndexReq, O: SystemIndexRep },
     { name: "Transactions", options: {}, I: TransactionsReq, O: TransactionsRep },
-    { name: "ExchangeContracts", options: {}, I: ExchangeContractsReq, O: ExchangeContractsRep }
+    { name: "ExchangeContracts", options: {}, I: ExchangeContractsReq, O: ExchangeContractsRep },
+    { name: "MultiMarketOrders", options: {}, I: MultiMarketOrdersReq, O: MultiMarketOrdersRep }
 ]);
