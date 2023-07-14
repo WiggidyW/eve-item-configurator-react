@@ -4,6 +4,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { HeaderButton } from "./input/Button";
 
 interface Props {
+  cancelName: string;
+  saveName: string;
   onCancelRef: React.MutableRefObject<() => void>;
   onSaveRef: React.MutableRefObject<() => void>;
   langRef: React.MutableRefObject<string>;
@@ -13,7 +15,16 @@ interface Props {
 }
 
 const Header = (props: Props): React.ReactElement => {
-  const { onCancelRef, onSaveRef, langRef, charName, charId, langs } = props;
+  const {
+    cancelName,
+    saveName,
+    onCancelRef,
+    onSaveRef,
+    langRef,
+    charName,
+    charId,
+    langs,
+  } = props;
   return (
     <>
       <div className={"default"}>
@@ -26,12 +37,12 @@ const Header = (props: Props): React.ReactElement => {
       </div>
       <div className={"default"}>
         <div className={"default header-item"}>
-          <HeaderButton text={"Cancel"} onClick={onCancelRef} />
+          <HeaderButton text={cancelName} onClick={onCancelRef} />
         </div>
       </div>
       <div className={"default"}>
         <div className={"default header-item"}>
-          <HeaderButton text={"Save"} onClick={onSaveRef} />
+          <HeaderButton text={saveName} onClick={onSaveRef} />
         </div>
       </div>
       <div className={"default"}>
