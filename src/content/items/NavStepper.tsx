@@ -20,8 +20,6 @@ export default function NavStepper(props: Props): React.ReactElement {
   let choices: string[];
   let onSelect: (s: string) => void;
 
-  console.log(navPathBuilder);
-
   // If undefined, then we need to get the business and initialize the builder.
   if (navPathBuilder === undefined) {
     description = BusinessStepStr;
